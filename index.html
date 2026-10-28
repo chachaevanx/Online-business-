@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08265e">
+<meta name="description" content="Chach Web Solution helps job seekers discover remote work, prepare CVs and find online opportunities.">
+<title>Chach Web Solution | Remote Jobs</title>
+
+<style>
+:root{
+  --navy:#08265e;--blue:#0759df;--light:#eef5ff;
+  --yellow:#ffca28;--green:#168447;--text:#182744;
+  --muted:#64748b;--border:#dbe5f5;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:95px}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#f5f8ff;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.container{width:min(1200px,94%);margin:auto}
+header{background:#fff;border-bottom:3px solid var(--blue);position:sticky;top:0;z-index:10}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:13px 0}
+.brand{font-size:22px;font-weight:800;color:var(--navy)}
+.tagline{font-size:12px;color:var(--blue)}
+.navlinks{display:flex;gap:15px;flex-wrap:wrap;align-items:center}
+.navlinks a{color:var(--navy);font-weight:600}
+.btn{display:inline-block;border:0;border-radius:9px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:700;text-align:center}
+.btn:hover{filter:brightness(.93)}
+.yellow{background:var(--yellow);color:#14213d}
+.green{background:var(--green)}
+.outline{background:white;color:var(--blue);border:1px solid var(--border)}
+.full{width:100%}
+.hero{background:linear-gradient(120deg,#061b48,#0759df);color:white;padding:48px 0}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}
+h1{font-size:clamp(34px,5vw,56px);line-height:1.1;margin:0 0 18px}
+h1 span{color:var(--yellow)}
+.hero p{font-size:18px}
+.checks{padding-left:20px}
+.checks li{margin:7px 0}
+.card{background:white;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 4px 18px #08265e0b;min-width:0}
+h2{font-size:24px;color:var(--navy);margin:0 0 14px}
+h3{color:var(--navy);margin:0 0 8px}
+.field{margin:12px 0}
+label{display:block;font-weight:700;margin-bottom:5px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd7ea;border-radius:8px;background:#fff;color:var(--text)}
+input:focus,select:focus,textarea:focus{outline:2px solid #9cc2ff}
+.tabs,.social{display:flex;gap:8px;margin-bottom:16px}
+.tabs button,.social button{flex:1}
+.social button{font-size:13px}
+.small{font-size:13px;color:var(--muted)}
+.notice,.status{padding:12px;border-radius:8px;margin:12px 0;overflow-wrap:anywhere}
+.notice{background:#fff8dd;border:1px solid #f3d46b}
+.status{background:#edf5ff;border:1px solid #d4e5ff}
+.success{background:#e9f9ee;border-color:#a6e4b7}
+.error{background:#fff0f0;border-color:#efb4b4}
+main{padding:28px 0 45px}
+section{margin-bottom:25px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.searchbar{display:grid;grid-template-columns:1fr 220px auto;gap:10px;margin:16px 0}
+.job{background:white;border:1px solid var(--border);border-radius:11px;padding:17px;display:flex;flex-direction:column;gap:8px}
+.job p{margin:0}
+.job .btn{margin-top:auto}
+.pill{display:inline-block;align-self:start;background:#e8f1ff;color:#0745a7;padding:3px 9px;border-radius:30px;font-size:12px;font-weight:bold}
+.job-meta{font-size:12px;color:var(--muted)}
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.step{flex:1;min-width:90px;background:var(--light);border-radius:8px;padding:10px;text-align:center;font-size:13px}
+.step strong{display:block;color:var(--blue);font-size:20px}
+.cvpreview{display:none;background:var(--light);padding:12px;border-radius:8px;overflow-wrap:anywhere}
+.hidden{display:none!important}
+footer{background:var(--navy);color:white;padding:28px 0}
+footer a{color:#fff;text-decoration:underline}
+.footergrid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.center{text-align:center}
+@media(max-width:780px){
+ .hero-grid,.grid2{grid-template-columns:1fr}
+ .grid3{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .searchbar{grid-template-columns:1fr}
+ .nav{justify-content:center}
+ .navlinks{justify-content:center}
+ .card{padding:17px}
+}
+@media(max-width:480px){
+ .grid3{grid-template-columns:1fr}
+ .brand{font-size:19px}
+ .navlinks{gap:10px;font-size:13px}
+}
+</style>
+</head>
+
+<body>
+<header>
+ <div class="container nav">
+  <a class="brand" href="#">
+   🌐 Chach Web Solution
+   <div class="tagline">Work Remotely • Earn Online</div>
+  </a>
+  <nav class="navlinks">
+   <a href="#">Home</a>
+   <a href="#jobs">Jobs</a>
+   <a href="#account">Account</a>
+   <a href="#cv">Upload CV</a>
+   <a href="#payment">M-Pesa</a>
+   <a href="#contact">Contact</a>
+  </nav>
+ </div>
+</header>
+
+<section class="hero">
+ <div class="container hero-grid">
+  <div>
+   <h1>Discover Online Jobs &amp;<br><span>Work Remotely</span></h1>
+   <p>Explore remote-work opportunities, showcase your skills and find work that matches your experience.</p>
+   <ul class="checks">
+    <li>Discover entry-level and skilled roles</li>
+    <li>Prepare and preview your CV</li>
+    <li>Explore opportunities across many industries</li>
+    <li>Find application instructions and employer links</li>
+   </ul>
+   <a class="btn yellow" href="#jobs">Explore Job Categories →</a>
+  </div>
+
+  <div class="card" id="account">
+   <div class="tabs">
+    <button class="btn" id="loginTab" type="button" onclick="showAuth('login')">Login</button>
+    <button class="btn outline" id="registerTab" type="button" onclick="showAuth('register')">Register</button>
+   </div>
+
+   <form id="loginForm">
+    <h2>Welcome Back</h2>
+    <div class="field">
+     <label for="loginEmail">Email address</label>
+     <input id="loginEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+    </div>
+    <div class="field">
+     <label for="loginPassword">Password</label>
+     <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter password">
+    </div>
+    <button class="btn full" type="submit">Login</button>
+    <p class="center"><button class="btn outline full" type="button" onclick="resetPassword()">Forgot password?</button></p>
+   </form>
+
+   <form id="registerForm" class="hidden">
+    <h2>Create Your Account</h2>
+    <div class="field">
+     <label for="fullName">Full name</label>
+     <input id="fullName" autocomplete="name" required placeholder="Your full name">
+    </div>
+    <div class="field">
+     <label for="registerEmail">Email address</label>
+     <input id="registerEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+    </div>
+    <div class="field">
+     <label for="registerPassword">Create password</label>
+     <input id="registerPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="At least 8 characters">
+    </div>
+    <button class="btn full" type="submit">Create Account</button>
+   </form>
+
+   <div class="social">
+    <button type="button" class="btn outline" onclick="socialLogin('Google')">Continue with Google</button>
+    <button type="button" class="btn outline" onclick="socialLogin('Facebook')">Continue with Facebook</button>
+   </div>
+   <div id="authMessage" class="status hidden" role="status"></div>
+   <p class="small">Secure sign-in and registration will work after authentication is connected.</p>
+  </div>
+ </div>
+</section>
+
+<main class="container">
+
+<section class="grid2">
+ <div class="card" id="cv">
+  <h2>📄 Upload Your CV</h2>
+  <p>Select your CV to preview its filename and details. A real account will be needed to save it securely online.</p>
+  <div class="field">
+   <label for="cvFile">CV document (PDF, DOC or DOCX)</label>
+   <input id="cvFile" type="file" accept=".pdf,.doc,.docx">
+  </div>
+  <p class="small">Maximum file size: 5 MB. This demonstration selects a file locally; it does not send it to a server.</p>
+  <div id="cvPreview" class="cvpreview"></div>
+ </div>
+
+ <div class="card" id="payment">
+  <h2>💳 Get a Job Application Credit</h2>
+  <p>Payment amount: <strong>KSh 100</strong></p>
+  <div class="notice">
+   <strong>M-Pesa number: 0799446312</strong><br>
+   M-Pesa is the only payment method accepted on this website.
+   <p>Send KSh 100 using the payment instructions provided by the website owner, then enter the transaction receipt below.</p>
+  </div>
+  <div class="steps">
+   <div class="step"><strong>1</strong>Pay KSh 100</div>
+   <div class="step"><strong>2</strong>Enter receipt</div>
+   <div class="step"><strong>3</strong>Verify payment</div>
+  </div>
+  <div class="field">
+   <label for="mpesaRef">M-Pesa receipt/reference code</label>
+   <input id="mpesaRef" maxlength="20" placeholder="Enter receipt code" autocomplete="off">
+  </div>
+  <button class="btn green full" type="button" onclick="submitPayment()">Submit Reference for Verification</button>
+  <div id="paymentStatus" class="status" role="status">No payment reference submitted.</div>
+  <p class="small">Entering a code does not prove payment. A secure server must verify the transaction before activating any credit.</p>
+ </div>
+</section>
+
+<section class="card" id="jobs">
+ <h2>💼 Explore Remote Job Opportunities</h2>
+ <p>Search by title, skill or category. These are job-role examples, not confirmed vacancies. Check the employer, eligibility and application details before applying.</p>
+
+ <div class="searchbar">
+  <input id="jobSearch" placeholder="Search job titles or skills..." aria-label="Search jobs">
+  <select id="jobCategory" aria-label="Filter by job category">
+   <option value="">All categories</option>
+  </select>
+  <button class="btn" type="button" onclick="renderJobs()">Search</button>
+ </div>
+
+ <p id="jobCount" class="small"></p>
+ <div id="jobList" class="grid3"></div>
+ <p id="noJobs" class="status hidden">No matching roles found. Try a different keyword or category.</p>
+</section>
+
+<section class="grid2">
+ <div class="card">
+  <h2>🔐 Account Security</h2>
+  <p>Users should be able to register, log in, reset forgotten passwords and manage their CVs securely.</p>
+  <p>Google and Facebook sign-in need authorized OAuth configuration. Passwords must never be stored in plain text.</p>
+  <button class="btn outline" type="button" onclick="resetPassword()">Reset Password</button>
+ </div>
+ <div class="card">
+  <h2>🚀 How the Platform Works</h2>
+  <p><strong>1.</strong> Register for an account.</p>
+  <p><strong>2.</strong> Upload your CV.</p>
+  <p><strong>3.</strong> Find a suitable remote opportunity.</p>
+  <p><strong>4.</strong> Follow the KSh 100 payment instructions if an application credit is required.</p>
+  <p><strong>5.</strong> Wait for genuine payment verification.</p>
+  <p><strong>6.</strong> Submit your application using the verified vacancy's application process.</p>
+ </div>
+</section>
+
+<section class="card">
+ <h2>🛡️ Protect Yourself When Searching for Online Work</h2>
+ <ul>
+  <li>Check the employer's official website and job description.</li>
+  <li>Never share your email password, M-Pesa PIN or one-time verification codes.</li>
+  <li>Be cautious of jobs promising guaranteed income or demanding unexplained fees.</li>
+  <li>Check whether the job accepts applicants living in Kenya.</li>
+  <li>Never treat example job titles on this page as proof of an actual vacancy.</li>
+ </ul>
+</section>
+
+<section class="card" id="contact">
+ <h2>📞 Contact Chach Web Solution</h2>
+ <p>For help with the website, account or payment questions, contact us using the details below.</p>
+ <p><strong>WhatsApp:</strong> <a class="btn green" href="https://wa.me/254799446312" target="_blank" rel="noopener noreferrer">Chat on WhatsApp: 0799446312</a></p>
+ <p><strong>Email:</strong> <a href="mailto:chachaevanx@gmail.com">chachaevanx@gmail.com</a></p>
+ <p><strong>Payment method:</strong> M-Pesa only</p>
+ <p><strong>Application credit fee:</strong> KSh 100</p>
+</section>
+
+</main>
+
+<footer>
+ <div class="container footergrid">
+  <div><strong>🌐 Chach Web Solution</strong><br><span>Work Remotely • Earn Online</span></div>
+  <div><a href="#jobs">Jobs</a> · <a href="#account">Account</a> · <a href="#cv">CV Upload</a> · <a href="#contact">Contact</a></div>
+  <div>© <span id="year"></span> Chach Web Solution</div>
+ </div>
+</footer>
+
+<script>
+/*
+ IMPORTANT:
+ This file is a front-end demonstration.
+ It does not implement real authentication, persistent CV uploads,
+ real vacancy feeds, payment verification, or credit issuance.
+*/
+
+const jobCatalog = {
+ "Data Entry":[
+  ["Data Entry Clerk","Enter and organize digital records."],
+  ["Data Annotator","Label text, images and other datasets."],
+  ["Online Research Assistant","Collect and organize information online."],
+  ["Data Quality Assistant","Check records for accuracy."],
+  ["Data Processing Assistant","Organize information for business use."],
+  ["Spreadsheet Assistant","Maintain spreadsheets and digital records."]
+ ],
+ "Writing":[
+  ["Content Writer","Write articles, blogs and website content."],
+  ["Copywriter","Create persuasive marketing copy."],
+  ["Technical Writer","Prepare technical documents and user guides."],
+  ["Grant Writer","Prepare funding proposals."],
+  ["Script Writer","Write scripts for videos and digital media."],
+  ["Blog Writer","Write articles for online publications."],
+  ["Proposal Writer","Prepare professional business proposals."]
+ ],
+ "Editing":[
+  ["Proofreader","Check spelling, punctuation and grammar."],
+  ["Copy Editor","Improve written content and clarity."],
+  ["Content Editor","Review online articles and publications."],
+  ["Document Formatter","Format reports and professional documents."]
+ ],
+ "Translation":[
+  ["English Translator","Translate written content."],
+  ["Swahili Translator","Translate English and Swahili content."],
+  ["Transcriptionist","Convert audio recordings into text."],
+  ["Subtitle Editor","Prepare subtitles and captions."],
+  ["Localization Assistant","Adapt digital content for different audiences."]
+ ],
+ "Design":[
+  ["Graphic Designer","Create logos, banners and advertisements."],
+  ["UI Designer","Design interfaces for websites and apps."],
+  ["UX Designer","Research and improve user experiences."],
+  ["Presentation Designer","Create professional presentations."],
+  ["Brand Designer","Develop visual identities for businesses."],
+  ["Canva Designer","Create digital marketing graphics."],
+  ["Illustrator","Produce digital illustrations."]
+ ],
+ "Development":[
+  ["Web Developer","Build and maintain websites."],
+  ["Frontend Developer","Develop interactive website interfaces."],
+  ["Backend Developer","Build server-side applications and APIs."],
+  ["Full-Stack Developer","Work on frontend and backend systems."],
+  ["Python Developer","Create software and automation tools."],
+  ["Mobile App Developer","Develop mobile applications."],
+  ["WordPress Developer","Build and maintain WordPress websites."],
+  ["Software Developer","Design, build and maintain software."],
+  ["Webmaster","Maintain website content and functionality."]
+ ],
+ "AI & Machine Learning":[
+  ["AI Data Annotator","Label datasets for AI development."],
+  ["AI Response Evaluator","Assess AI-generated responses against guidelines."],
+  ["Machine Learning Engineer","Build machine learning systems."],
+  ["AI Research Assistant","Support AI research and documentation."],
+  ["Prompt Evaluator","Test prompts and assess output quality."],
+  ["AI Quality Reviewer","Review generated content for errors."]
+ ],
+ "Data & Analytics":[
+  ["Data Analyst","Analyze datasets and prepare reports."],
+  ["Business Intelligence Analyst","Create dashboards and business reports."],
+  ["SQL Analyst","Query databases and analyze information."],
+  ["Data Visualization Specialist","Present data using charts and dashboards."],
+  ["Reporting Analyst","Prepare operational and performance reports."],
+  ["Junior Data Analyst","Support data cleaning and analysis."],
+  ["Excel Analyst","Organize data and build spreadsheets."]
+ ],
+ "Cybersecurity":[
+  ["Security Analyst","Monitor security events and investigate alerts."],
+  ["Cybersecurity Consultant","Advise on information security."],
+  ["Security Tester","Test authorized systems for vulnerabilities."],
+  ["Risk Analyst","Assess operational and information risks."]
+ ],
+ "IT Support":[
+  ["Remote IT Support Technician","Troubleshoot computer and software problems."],
+  ["Technical Support Agent","Help customers resolve technical issues."],
+  ["Systems Administrator","Maintain computer systems."],
+  ["Cloud Support Associate","Assist with cloud service issues."],
+  ["Help Desk Technician","Respond to user support requests."],
+  ["Network Support Technician","Support computer networks."]
+ ],
+ "Engineering":[
+  ["Electrical Design Engineer","Prepare electrical designs and drawings."],
+  ["Electrical Engineering Assistant","Support calculations and technical documentation."],
+  ["Instrumentation Engineer","Prepare instrumentation and control documentation."],
+  ["PLC Programmer","Develop and troubleshoot PLC systems."],
+  ["CAD Designer","Prepare technical drawings using CAD."],
+  ["Renewable Energy Analyst","Analyze renewable energy projects."],
+  ["Technical Documentation Specialist","Prepare engineering reports and manuals."],
+  ["Electronics Design Assistant","Support electronic circuit design documentation."],
+  ["Control Systems Engineer","Develop and document control system solutions."],
+  ["Energy Data Analyst","Analyze energy consumption and performance data."]
+ ],
+ "Virtual Assistance":[
+  ["Virtual Assistant","Handle scheduling, email and administration."],
+  ["Executive Assistant","Support managers with administrative tasks."],
+  ["Online Research Assistant","Research topics and prepare summaries."],
+  ["Appointment Setter","Schedule meetings and appointments."],
+  ["Administrative Assistant","Maintain digital files and office records."],
+  ["Email Management Assistant","Organize business email workflows."]
+ ],
+ "Customer Support":[
+  ["Customer Service Representative","Assist customers through email or chat."],
+  ["Live Chat Agent","Respond to customer questions online."],
+  ["Customer Success Associate","Help clients use products successfully."],
+  ["Call Centre Agent","Handle calls for remote-capable businesses."],
+  ["Customer Support Specialist","Resolve customer enquiries and complaints."],
+  ["Community Support Agent","Help manage online communities."]
+ ],
+ "Sales":[
+  ["Sales Representative","Contact prospects and explain products."],
+  ["Business Development Representative","Identify sales opportunities."],
+  ["Account Manager","Maintain client relationships."],
+  ["Lead Generation Specialist","Research potential customers."],
+  ["Inside Sales Associate","Support sales remotely."],
+  ["Sales Development Representative","Qualify prospects and schedule sales meetings."]
+ ],
+ "Marketing":[
+  ["Digital Marketing Assistant","Support online marketing campaigns."],
+  ["SEO Specialist","Improve website search visibility."],
+  ["Social Media Manager","Plan and manage social media content."],
+  ["Email Marketing Specialist","Create and manage email campaigns."],
+  ["Affiliate Marketing Specialist","Support affiliate campaigns and reporting."],
+  ["Content Marketing Specialist","Plan useful marketing content."],
+  ["Marketing Analyst","Analyze campaign performance."],
+  ["Community Manager","Manage brand communities online."]
+ ],
+ "Education":[
+  ["Online Tutor","Teach students through virtual lessons."],
+  ["Online English Teacher","Teach English remotely."],
+  ["Curriculum Developer","Create educational learning materials."],
+  ["Instructional Designer","Develop online courses."],
+  ["E-learning Assistant","Support digital learning platforms."],
+  ["Subject Tutor","Provide online lessons in a subject you know."],
+  ["Educational Content Writer","Create learnin
