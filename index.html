@@ -3,241 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHACH WEB SOLUTION | M-Pesa Express Checkout</title>
+    <title>Chach Web Solution - Remote Careers</title>
     <style>
-        :root {
-            --primary-color: #008751;
-            --primary-hover: #006b40;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-main: #333333;
-            --text-muted: #666666;
-            --error-color: #d9534f;
-            --success-color: #5cb85c;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 420px;
-            background: var(--card-bg);
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .header h1 {
-            color: var(--primary-color);
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 13px;
-            color: var(--text-main);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ccd1d1;
-            border-radius: 6px;
-            font-size: 15px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 135, 81, 0.15);
-        }
-
-        .hint {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-
-        button {
-            width: 100%;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: var(--primary-hover);
-        }
-
-        button:disabled {
-            background-color: #a3c9b7;
-            cursor: not-allowed;
-        }
-
-        #statusBox {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            text-align: center;
-            display: none;
-            line-height: 1.4;
-        }
-
-        .status-loading {
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-            display: block !important;
-        }
-
-        .status-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            display: block !important;
-        }
-
-        .status-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block !important;
-        }
-
-        .footer-note {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
+        :root { --primary: #0f172a; --accent: #2563eb; --bg: #f8fafc; }
+        body { font-family: system-ui, -apple-system, sans-serif; margin: 0; background: var(--bg); color: #334155; }
+        header { background: var(--primary); color: white; padding: 2rem 1rem; text-align: center; }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        .search-bar { width: 100%; padding: 0.75rem; font-size: 1rem; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 1.5rem; }
+        .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+        .job-card { background: white; padding: 1.25rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; }
+        .job-card h3 { margin: 0 0 0.5rem 0; color: var(--primary); font-size: 1.1rem; }
+        .tag { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-bottom: 0.75rem; }
+        .apply-btn { background: var(--accent); color: white; border: none; padding: 0.6rem 1rem; cursor: pointer; border-radius: 4px; font-weight: 500; text-align: center; }
+        .apply-btn:hover { background: #1d4ed8; }
+        
+        /* Modal Styles */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 100; }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 100%; max-width: 400px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .modal-content input { width: 100%; padding: 0.6rem; margin: 0.5rem 0 1rem 0; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; }
+        .close-link { color: #ef4444; background: none; border: none; cursor: pointer; margin-top: 1rem; width: 100%; text-align: center; }
     </style>
 </head>
 <body>
 
+    <header>
+        <h1>CHACH WEB SOLUTION</h1>
+        <p>Explore verified remote work opportunities in the digital economy</p>
+    </header>
+
     <div class="container">
-        <div class="header">
-            <h1>CHACH WEB SOLUTION</h1>
-            <p>Secure M-Pesa Express Checkout</p>
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search jobs by title or category (e.g., AI, Writing, Virtual Assistant)..." onkeyup="filterJobs()">
+        
+        <div id="job-list" class="job-grid">
+            <!-- Dynamically populated job cards -->
         </div>
+    </div>
 
-        <form id="checkoutForm">
-            <div class="form-group">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" placeholder="e.g. 2547XXXXXXXX" required pattern="^(2547|07)\d{8}$">
-                <div class="hint">Format: 2547XXXXXXXX or 07XXXXXXXX</div>
-            </div>
-
-            <div class="form-group">
-                <label for="amount">Amount (KES)</label>
-                <input type="number" id="amount" placeholder="Enter amount" min="1" required>
-            </div>
-
-            <button type="submit" id="payButton">Pay with M-Pesa</button>
-        </form>
-
-        <div id="statusBox"></div>
-
-        <div class="footer-note">
-            Powered by Safaricom Daraja API
+    <!-- Application / Payment Modal -->
+    <div id="appModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Apply for Role</h3>
+            <p style="font-size: 0.9rem; color: #64748b;">Upload your CV and pay the Ksh 100 token fee via M-Pesa STK Push.</p>
+            
+            <label>Upload CV (PDF / DOCX)</label>
+            <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
+            
+            <label>M-Pesa Phone Number</label>
+            <input type="text" id="mpesaPhone" placeholder="07XXXXXXXX or 2547XXXXXXXX">
+            
+            <button class="apply-btn" style="width: 100%;" onclick="processPaymentAndSubmit()">Pay Ksh 100 & Submit</button>
+            <button class="close-link" onclick="closeModal()">Cancel</button>
         </div>
     </div>
 
     <script>
-        const form = document.getElementById('checkoutForm');
-        const payButton = document.getElementById('payButton');
-        const statusBox = document.getElementById('statusBox');
+        // Master list of remote job opportunities
+        const jobs = [
+            { title: "AI Response Evaluator", category: "AI Training", platform: "Outlier", pay: "Flexible task-based" },
+            { title: "Data Labeler & Image Tagger", category: "AI Training", platform: "DataAnnotation", pay: "Hourly rates" },
+            { title: "SEO Blog Post Writer", category: "Writing", platform: "WriterBay", pay: "Ksh 1,500 - 4,000 / article" },
+            { title: "Academic Essay Contributor", category: "Writing", platform: "Uvocorp", pay: "Per project" },
+            { title: "Remote Customer Support Chat Agent", category: "Support", platform: "Zendesk Network", pay: "Monthly retainer" },
+            { title: "Email Management Virtual Assistant", category: "Virtual Assistant", platform: "Time Etc", pay: "Hourly" },
+            { title: "Calendar & Schedule Coordinator", category: "Virtual Assistant", platform: "Belay", pay: "Hourly" },
+            { title: "Data Entry Specialist", category: "Admin", platform: "Upwork", pay: "Task-based" },
+            { title: "TikTok Organic Content Creator", category: "Marketing", platform: "Brand Partnerships", pay: "Commission + Base" },
+            { title: "Frontend Landing Page Builder", category: "Technical", platform: "Freelance", pay: "Per build" }
+        ];
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        let selectedRole = "";
+
+        function renderJobs(filteredList) {
+            const container = document.getElementById('job-list');
+            container.innerHTML = "";
             
-            let phoneInput = document.getElementById('phoneNumber').value.trim();
-            const amount = document.getElementById('amount').value.trim();
+            filteredList.forEach((job, index) => {
+                container.innerHTML += `
+                    <div class="job-card">
+                        <div>
+                            <span class="tag">${job.category}</span>
+                            <h3>${job.title}</h3>
+                            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">Platform: ${job.platform} | Est. Pay: ${job.pay}</p>
+                        </div>
+                        <button class="apply-btn" onclick="openModal('${job.title}')">Apply Now</button>
+                    </div>
+                `;
+            });
+        }
 
-            // Normalize phone number to 2547XXXXXXXX format if it starts with 07
-            if (phoneInput.startsWith('07')) {
-                phoneInput = '254' + phoneInput.slice(1);
+        function filterJobs() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = jobs.filter(j => j.title.toLowerCase().includes(query) || j.category.toLowerCase().includes(query));
+            renderJobs(filtered);
+        }
+
+        function openModal(jobTitle) {
+            selectedRole = jobTitle;
+            document.getElementById('modal-title').innerText = "Apply: " + jobTitle;
+            document.getElementById('appModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('appModal').style.display = 'none';
+        }
+
+        async function processPaymentAndSubmit() {
+            const phone = document.getElementById('mpesaPhone').value;
+            const file = document.getElementById('cvFile').files[0];
+
+            if(!phone || !file) {
+                alert("Please provide your phone number and upload your CV file.");
+                return;
             }
 
-            // Update UI to loading state
-            payButton.disabled = true;
-            payButton.innerText = "Processing...";
-            statusBox.className = "status-loading";
-            statusBox.innerText = "Initiating STK Push. Please check your phone for the M-Pesa prompt...";
+            alert("Initiating M-Pesa STK Push. Check your phone for the PIN prompt.");
 
             try {
-                // Connects to your backend endpoint created earlier
-                const response = await fetch('http://localhost:3000/api/v1/stkpush', {
+                const response = await fetch('/api/stk-push', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        phoneNumber: phoneInput,
-                        amount: amount
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, job: selectedRole })
                 });
-
                 const result = await response.json();
-
-                if (result.success) {
-                    statusBox.className = "status-success";
-                    statusBox.innerText = "STK Push sent successfully! Enter your M-Pesa PIN on your phone to complete the transaction.";
+                
+                if(result.success) {
+                    alert("STK Push sent successfully! Complete payment on your phone to finalize submission.");
+                    closeModal();
                 } else {
-                    statusBox.className = "status-error";
-                    statusBox.innerText = "Failed: " + (result.error?.errorMessage || result.message || "Could not process payment.");
+                    alert("Payment request failed to trigger. Please check your network or phone format.");
                 }
-            } catch (error) {
-                statusBox.className = "status-error";
-                statusBox.innerText = "Network error: Make sure your backend server is running.";
-            } finally {
-                payButton.disabled = false;
-                payButton.innerText = "Pay with M-Pesa";
+            } catch (err) {
+                console.error(err);
+                alert("Could not reach backend payment server.");
             }
-        });
+        }
+
+        // Initial render
+        renderJobs(jobs);
     </script>
 </body>
 </html>
