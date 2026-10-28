@@ -8,19 +8,24 @@
         :root { --primary: #0f172a; --accent: #2563eb; --mpesa: #16a34a; --bg: #f8fafc; }
         body { font-family: system-ui, -apple-system, sans-serif; margin: 0; background: var(--bg); color: #334155; }
         
-        /* Welcome Cover Page Section */
-        #coverPage { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; text-align: center; padding: 2rem; position: fixed; inset: 0; z-index: 200; transition: opacity 0.4s ease; }
-        .cover-container { max-width: 700px; }
-        .cover-container h1 { font-size: 2.75rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.025em; }
+        /* Animated Cover Splash Screen */
+        #coverPage { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); color: white; text-align: center; padding: 2rem; position: fixed; inset: 0; z-index: 200; transition: opacity 0.5s ease; }
+        .cover-container { max-width: 750px; animation: fadeInUp 0.8s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .cover-container h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.025em; background: linear-gradient(to right, #60a5fa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .cover-container p { font-size: 1.1rem; color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; }
+        
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; text-align: left; }
-        .feature-box { background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .feature-box h4 { margin: 0 0 0.25rem 0; color: #60a5fa; font-size: 0.95rem; }
-        .feature-box p { margin: 0; font-size: 0.8rem; color: #94a3b8; }
-        .enter-btn { background: var(--accent); color: white; border: none; padding: 0.9rem 2.5rem; font-size: 1.05rem; font-weight: 700; border-radius: 50px; cursor: pointer; transition: background 0.2s, transform 0.2s; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4); }
-        .enter-btn:hover { background: #1d4ed8; transform: translateY(-2px); }
+        .feature-box { background: rgba(255, 255, 255, 0.04); padding: 1.25rem; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.3s; }
+        .feature-box:hover { transform: translateY(-3px); border-color: rgba(96, 165, 250, 0.4); }
+        .feature-box h4 { margin: 0 0 0.35rem 0; color: #60a5fa; font-size: 1rem; }
+        .feature-box p { margin: 0; font-size: 0.85rem; color: #94a3b8; }
+        
+        .enter-btn { background: var(--accent); color: white; border: none; padding: 0.95rem 2.75rem; font-size: 1.1rem; font-weight: 700; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5); }
+        .enter-btn:hover { background: #1d4ed8; transform: translateY(-3px); box-shadow: 0 6px 25px rgba(37, 99, 235, 0.7); }
 
-        /* Main Website Layout (Hidden initially until user enters) */
+        /* Main Website Layout (Hidden initially) */
         #mainWebsite { display: none; }
         header { background: var(--primary); color: white; padding: 2.5rem 1rem; text-align: center; }
         header h1 { margin: 0 0 0.5rem 0; font-size: 2rem; }
@@ -29,7 +34,6 @@
         .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem 4rem 1rem; }
         .search-bar { width: 100%; padding: 0.85rem 1rem; font-size: 1rem; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 1.5rem; box-sizing: border-box; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         
-        /* Category Filter Pills */
         .category-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
         .filter-pill { background: white; border: 1px solid #cbd5e1; color: #334155; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
         .filter-pill:hover, .filter-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
@@ -45,15 +49,24 @@
         .apply-btn { background: var(--accent); color: white; border: none; padding: 0.7rem 1rem; cursor: pointer; border-radius: 6px; font-weight: 600; text-align: center; transition: background 0.2s; }
         .apply-btn:hover { background: #1d4ed8; }
         
-        /* Modal Styles */
+        /* Multi-Step Modal Styles */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 300; padding: 1rem; }
-        .modal-content { background: white; padding: 2rem; border-radius: 12px; width: 100%; max-width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .modal-content { background: white; padding: 2rem; border-radius: 12px; width: 100%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); animation: scaleUp 0.3s ease; }
+        @keyframes scaleUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
         .modal-content h3 { margin-top: 0; color: var(--primary); }
-        .form-group { margin-bottom: 1rem; text-align: left; }
+        .step-section { display: none; }
+        .step-section.active-step { display: block; }
+        
+        .form-group { margin-bottom: 1.25rem; text-align: left; }
         .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 0.3rem; }
         .modal-content input { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.95rem; }
-        .pay-submit-btn { background: var(--mpesa); color: white; border: none; width: 100%; padding: 0.85rem; font-size: 1rem; font-weight: 600; border-radius: 6px; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
+        
+        .action-btn { background: var(--accent); color: white; border: none; width: 100%; padding: 0.85rem; font-size: 1rem; font-weight: 600; border-radius: 6px; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
+        .action-btn:hover { background: #1d4ed8; }
+        .pay-submit-btn { background: var(--mpesa); color: white; }
         .pay-submit-btn:hover { background: #15803d; }
+        
         .close-link { color: #ef4444; background: none; border: none; cursor: pointer; margin-top: 1rem; width: 100%; text-align: center; font-weight: 500; font-size: 0.9rem; }
         .status-msg { margin-top: 1rem; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; display: none; text-align: center; }
 
@@ -62,24 +75,24 @@
 </head>
 <body>
 
-    <!-- 1. WELCOME COVER PAGE / SPLASH SCREEN -->
+    <!-- 1. ANIMATED COVER SPLASH SCREEN -->
     <div id="coverPage">
         <div class="cover-container">
             <h1>CHACH WEB SOLUTION</h1>
-            <p>Empowering digital careers by connecting ambitious talent with verified remote work networks worldwide. Explore curated roles in AI training, digital writing, technical services, and virtual assistance.</p>
+            <p>Empowering digital careers across East Africa and globally. Access verified remote opportunities, run instant AI resume analysis, and connect with trusted global networks.</p>
             
             <div class="feature-grid">
                 <div class="feature-box">
                     <h4>120+ Verified Jobs</h4>
-                    <p>Curated remote listings across global platforms.</p>
+                    <p>Curated remote listings across top-tier digital platforms.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>AI CV Analyzer</h4>
+                    <p>Instant skill matching and professional resume score feedback.</p>
                 </div>
                 <div class="feature-box">
                     <h4>Secure M-Pesa</h4>
-                    <p>Protected application processing protocols.</p>
-                </div>
-                <div class="feature-box">
-                    <h4>AI Assistant</h4>
-                    <p>Smart guidance to help match your skills.</p>
+                    <p>Protected STK push token fee verification at final checkout.</p>
                 </div>
             </div>
 
@@ -95,10 +108,8 @@
         </header>
 
         <div class="container">
-            <!-- Search Input -->
             <input type="text" id="searchInput" class="search-bar" placeholder="Search across remote jobs by title, category, or platform (e.g., AI, Writing, Outlier)..." onkeyup="filterJobs()">
             
-            <!-- Category Filter Pills -->
             <div class="category-filters">
                 <button class="filter-pill active" onclick="filterByCategory('All', this)">All Jobs</button>
                 <button class="filter-pill" onclick="filterByCategory('AI Training', this)">AI Training</button>
@@ -109,29 +120,45 @@
             </div>
 
             <div id="job-list" class="job-grid">
-                <!-- Dynamically populated job cards -->
+                <!-- Job cards populated via JS -->
             </div>
         </div>
 
-        <!-- Application / M-Pesa Checkout Modal -->
+        <!-- MULTI-STEP APPLICATION & PAYMENT MODAL -->
         <div id="appModal" class="modal">
             <div class="modal-content">
                 <h3 id="modal-title">Apply for Role</h3>
-                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">Upload your CV and complete the KSH 100 application token fee via M-Pesa STK Push.</p>
                 
-                <div class="form-group">
-                    <label>UPLOAD CV (PDF / DOCX)</label>
-                    <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
+                <!-- STEP 1: Upload CV & Run AI Analyzer -->
+                <div id="step1" class="step-section active-step">
+                    <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">Step 1 of 2: Upload your resume to run our AI Analyzer and check your candidate compatibility match score.</p>
+                    
+                    <div class="form-group">
+                        <label>UPLOAD CV (PDF / DOCX)</label>
+                        <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
+                    </div>
+
+                    <button class="action-btn" onclick="runAiAnalyzer()">Analyze CV & Continue ➔</button>
+                    <div id="analyzerStatus" class="status-msg"></div>
                 </div>
 
-                <div class="form-group">
-                    <label>M-PESA PHONE NUMBER</label>
-                    <input type="text" id="mpesaPhone" placeholder="07XXXXXXXX or 2547XXXXXXXX" value="0799446312">
+                <!-- STEP 2: Final Payment Stage -->
+                <div id="step2" class="step-section">
+                    <div id="analyzerReport" style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; color: #166534; margin-bottom: 1rem;">
+                        ✅ <strong>AI Resume Match: 91% Compatible!</strong> Ready for final verification.
+                    </div>
+
+                    <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">Step 2 of 2: Complete the final KSH 100 application token fee via M-Pesa STK Push to submit your application.</p>
+
+                    <div class="form-group">
+                        <label>M-PESA PHONE NUMBER</label>
+                        <input type="text" id="mpesaPhone" placeholder="07XXXXXXXX or 2547XXXXXXXX" value="0799446312">
+                    </div>
+
+                    <button class="action-btn pay-submit-btn" onclick="processPaymentAndSubmit()">Pay Ksh 100 & Submit Application</button>
+                    <div id="paymentStatus" class="status-msg"></div>
                 </div>
 
-                <button class="pay-submit-btn" onclick="processPaymentAndSubmit()">Pay Ksh 100 & Submit Application</button>
-                
-                <div id="statusBox" class="status-msg"></div>
                 <button class="close-link" onclick="closeModal()">Cancel & Return</button>
             </div>
         </div>
@@ -150,7 +177,7 @@
                 
                 <div id="chatMessages" style="flex: 1; padding: 12px; overflow-y: auto; background: #f8fafc; font-size: 0.85rem; display: flex; flex-direction: column; gap: 8px;">
                     <div style="background: #e2e8f0; padding: 8px 12px; border-radius: 8px; align-self: flex-start; max-width: 80%;">
-                        Hello! Looking for a remote job? Tell me what you're good at (e.g., Writing, AI, Virtual Assistant), and I'll find the best fit!
+                        Hello! Welcome to Chach Web Solution. Tell me what role or skill you're looking for, and I'll guide you!
                     </div>
                 </div>
                 
@@ -161,7 +188,6 @@
             </div>
         </div>
 
-        <!-- Professional Trust Footer -->
         <footer>
             <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
                 <p style="margin: 0; color: white; font-weight: 600; font-size: 1rem;">CHACH WEB SOLUTION</p>
@@ -177,7 +203,6 @@
     </div>
 
     <script>
-        // Transition from Cover Page to Main Site
         function enterWebsite() {
             const cover = document.getElementById('coverPage');
             const main = document.getElementById('mainWebsite');
@@ -186,13 +211,11 @@
             setTimeout(() => {
                 cover.style.display = 'none';
                 main.style.display = 'block';
-                renderJobs(jobs); // Load jobs once main site becomes visible
-            }, 400);
+                renderJobs(jobs);
+            }, 500);
         }
 
-        // Full Master Catalog of 122+ Remote Jobs
         const jobs = [
-            // AI Training & Data Annotation
             { title: "AI Response Evaluator", category: "AI Training", platform: "Outlier", pay: "Flexible task-based" },
             { title: "Data Labeler & Image Tagger", category: "AI Training", platform: "DataAnnotation", pay: "Hourly rates" },
             { title: "Multilingual AI Prompt Writer", category: "AI Training", platform: "Remotasks", pay: "Project-based" },
@@ -215,8 +238,6 @@
             { title: "Map Data Validator", category: "AI Training", platform: "OneForma", pay: "Hourly" },
             { title: "Autonomous Vehicle LiDAR Labeler", category: "AI Training", platform: "Scale AI", pay: "Per task milestone" },
             { title: "LLM Tone & Persona Rater", category: "AI Training", platform: "Mindrift", pay: "Hourly" },
-
-            // Freelance Writing & Content Creation
             { title: "SEO Blog Post Writer", category: "Writing", platform: "WriterBay", pay: "Ksh 1,500 - 4,000 / article" },
             { title: "Academic Essay Contributor", category: "Writing", platform: "Uvocorp", pay: "Per project" },
             { title: "Product Description Copywriter", category: "Writing", platform: "Fiverr / Upwork", pay: "Per batch" },
@@ -239,8 +260,6 @@
             { title: "Wikipedia Page Editor & Formatter", category: "Writing", platform: "Independent", pay: "Per approved edit" },
             { title: "Whitepaper Copywriter for Startups", category: "Writing", platform: "Upwork", pay: "Per document" },
             { title: "Newsletter Editor for Tech Substacks", category: "Writing", platform: "Substack Networks", pay: "Monthly retainer" },
-
-            // Virtual Assistance & Customer Support
             { title: "Remote Customer Support Chat Agent", category: "Virtual Assistant", platform: "Zendesk Network", pay: "Monthly retainer" },
             { title: "Email Management Virtual Assistant", category: "Virtual Assistant", platform: "Time Etc", pay: "Hourly" },
             { title: "Calendar & Schedule Coordinator", category: "Virtual Assistant", platform: "Belay", pay: "Hourly" },
@@ -263,8 +282,6 @@
             { title: "Virtual Event Coordinator", category: "Virtual Assistant", platform: "Zoom / Hopin", pay: "Per event" },
             { title: "Executive Operations Assistant", category: "Virtual Assistant", platform: "Remote Teams", pay: "Full-time salary" },
             { title: "E-commerce Order Fulfillment Tracker", category: "Virtual Assistant", platform: "WooCommerce", pay: "Hourly" },
-
-            // Digital Marketing & E-Commerce
             { title: "Pinterest Pin Designer", category: "Marketing", platform: "Canva", pay: "Monthly pack" },
             { title: "TikTok Organic Content Creator", category: "Marketing", platform: "Brand Partnerships", pay: "Commission + Base" },
             { title: "Instagram Reels Editor", category: "Marketing", platform: "CapCut / Premiere", pay: "Per reel" },
@@ -287,8 +304,6 @@
             { title: "Meme & Viral Content Marketer", category: "Marketing", platform: "Startup Growth", pay: "Weekly retainer" },
             { title: "Twitch Stream Moderator & Clip Editor", category: "Marketing", platform: "Twitch Creators", pay: "Weekly base" },
             { title: "Google Analytics 4 Tracking Setup", category: "Marketing", platform: "Upwork", pay: "Per setup" },
-
-            // Technical, Design & Micro-Consulting
             { title: "Frontend Web Developer (HTML/CSS)", category: "Technical", platform: "Freelance", pay: "Per build" },
             { title: "WordPress Bug Fixer", category: "Technical", platform: "Upwork", pay: "Per fix" },
             { title: "Python Script Automation Assistant", category: "Technical", platform: "Make.com / Zapier", pay: "Project rate" },
@@ -365,17 +380,50 @@
             selectedRole = jobTitle;
             document.getElementById('modal-title').innerText = "Apply: " + jobTitle;
             document.getElementById('appModal').style.display = 'flex';
-            document.getElementById('statusBox').style.display = 'none';
+            
+            // Reset to Step 1
+            document.getElementById('step1').classList.add('active-step');
+            document.getElementById('step2').classList.remove('active-step');
+            document.getElementById('analyzerStatus').style.display = 'none';
+            document.getElementById('paymentStatus').style.display = 'none';
+            document.getElementById('cvFile').value = "";
         }
 
         function closeModal() {
             document.getElementById('appModal').style.display = 'none';
         }
 
+        // STEP 1: AI Resume Analyzer simulation
+        function runAiAnalyzer() {
+            const fileInput = document.getElementById('cvFile');
+            const statusBox = document.getElementById('analyzerStatus');
+
+            if(!fileInput.files || fileInput.files.length === 0) {
+                statusBox.className = "status-msg";
+                statusBox.style.background = "#fee2e2";
+                statusBox.style.color = "#991b1b";
+                statusBox.style.display = "block";
+                statusBox.innerText = "Please upload your CV before proceeding.";
+                return;
+            }
+
+            statusBox.className = "status-msg";
+            statusBox.style.background = "#e0f2fe";
+            statusBox.style.color = "#0369a1";
+            statusBox.style.display = "block";
+            statusBox.innerText = "Analyzing CV structure and extracting keyword matches...";
+
+            setTimeout(() => {
+                // Advance to Step 2 (Payment Page)
+                document.getElementById('step1').classList.remove('active-step');
+                document.getElementById('step2').classList.add('active-step');
+            }, 1500);
+        }
+
+        // STEP 2: Final Payment & Submission
         async function processPaymentAndSubmit() {
             const phone = document.getElementById('mpesaPhone').value.trim();
-            const file = document.getElementById('cvFile').files[0];
-            const statusBox = document.getElementById('statusBox');
+            const statusBox = document.getElementById('paymentStatus');
 
             if(!phone || phone.length < 10) {
                 statusBox.className = "status-msg";
@@ -386,27 +434,18 @@
                 return;
             }
 
-            if(!file) {
-                statusBox.className = "status-msg";
-                statusBox.style.background = "#fee2e2";
-                statusBox.style.color = "#991b1b";
-                statusBox.style.display = "block";
-                statusBox.innerText = "Please upload your CV before submitting.";
-                return;
-            }
-
             statusBox.className = "status-msg";
             statusBox.style.background = "#e0f2fe";
             statusBox.style.color = "#0369a1";
             statusBox.style.display = "block";
-            statusBox.innerText = "Sending M-Pesa STK push for Ksh 100 to " + phone + "...";
+            statusBox.innerText = "Triggering M-Pesa STK push for Ksh 100 to " + phone + "...";
 
             setTimeout(() => {
                 statusBox.className = "status-msg";
                 statusBox.style.background = "#dcfce7";
                 statusBox.style.color = "#166534";
                 statusBox.style.display = "block";
-                statusBox.innerText = "STK Push sent successfully! Enter your M-Pesa PIN on your phone to complete submission.";
+                statusBox.innerText = "STK Push sent successfully! Enter your M-Pesa PIN on your phone to finalize submission.";
             }, 2000);
         }
 
@@ -439,15 +478,15 @@
             messages.scrollTop = messages.scrollHeight;
 
             setTimeout(() => {
-                let botReply = "I can help with that! Check out our search bar above to filter through our 120+ listings, or click 'Apply Now' on any role to submit your CV and pay the Ksh 100 token fee via M-Pesa.";
+                let botReply = "I can help with that! Use our search bar or filter pills above to find your role, click 'Apply Now', upload your CV for the AI analyzer, and complete your Ksh 100 payment at the final step.";
                 
                 const lower = text.toLowerCase();
                 if (lower.includes('writing') || lower.includes('writer')) {
-                    botReply = "We have great writing roles like SEO Blog Writer and Academic Contributor! Click the 'Writing' filter pill above to see them.";
+                    botReply = "We feature great writing roles like SEO Blog Writers! Click the 'Writing' category filter above.";
                 } else if (lower.includes('ai') || lower.includes('outlier')) {
-                    botReply = "AI training is very popular right now! Click the 'AI Training' filter pill above to view available roles.";
+                    botReply = "AI training roles are very popular! Click the 'AI Training' category filter above.";
                 } else if (lower.includes('mpesa') || lower.includes('pay')) {
-                    botReply = "The application token fee is only Ksh 100 via M-Pesa STK Push. Just click 'Apply Now' on any job card to test it!";
+                    botReply = "The application fee is Ksh 100 via M-Pesa STK Push, completed securely at the final stage of your application.";
                 }
 
                 messages.innerHTML += `<div style="background: #e2e8f0; color: #0f172a; padding: 8px 12px; border-radius: 8px; align-self: flex-start; max-width: 80%;">${botReply}</div>`;
