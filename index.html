@@ -423,7 +423,27 @@
         // STEP 2: Final Payment & Submission
         
 
-          try {
+       // STEP 2: Final Payment & Submission
+async function processPaymentAndSubmit() {
+    const phone = document.getElementById('mpesaPhone').value.trim();
+    const statusBox = document.getElementById('paymentStatus');
+
+    if(!phone || phone.length < 10) {
+        statusBox.className = "status-msg";
+        statusBox.style.background = "#fee2e2";
+        statusBox.style.color = "#991b1b";
+        statusBox.style.display = "block";
+        statusBox.innerText = "Please enter a valid Safaricom phone number.";
+        return;
+    }
+
+    statusBox.className = "status-msg";
+    statusBox.style.background = "#e0f2fe";
+    statusBox.style.color = "#0369a1";
+    statusBox.style.display = "block";
+    statusBox.innerText = "Connecting to Safaricom Daraja API...";
+
+    try {
         const response = await fetch('https://online-business-40tn.onrender.com/api/stk-push', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
