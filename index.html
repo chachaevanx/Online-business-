@@ -3,16 +3,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Chach Web Solution helps job seekers explore remote-work opportunities and prepare professional CVs.">
-  <title>Chach Web Solution | Remote Careers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Chach Web Solution helps people prepare for remote-work opportunities.">
+  <title>Chach Web Solution</title>
 
   <style>
     :root {
       --navy: #102746;
       --blue: #1769ff;
-      --light: #f3f7fc;
-      --white: #ffffff;
+      --bg: #f3f7fc;
       --text: #172337;
       --muted: #68768b;
       --border: #dce5f0;
@@ -23,206 +22,163 @@
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
       color: var(--text);
-      background: var(--light);
+      font-family: Arial, sans-serif;
       line-height: 1.6;
     }
 
-    button, input, select, textarea { font: inherit; }
+    button, input, select { font: inherit; }
     button { cursor: pointer; }
-
     .hidden { display: none !important; }
 
-    .topbar {
+    header {
       background: var(--navy);
       color: white;
-      padding: 15px 5%;
+      padding: 17px 5%;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      align-items: center;
       flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .brand { font-size: 21px; font-weight: 800; }
-    .brand span { color: #68a0ff; }
+    .brand { font-size: 21px; font-weight: bold; }
+    .brand span { color: #76aaff; }
 
-    .topbar small { color: #d9e6ff; }
-
-    .container {
-      width: min(1100px, 92%);
-      margin: 30px auto;
+    main {
+      width: min(1050px, 92%);
+      margin: 28px auto;
+      min-height: 65vh;
     }
 
     .panel {
       background: white;
-      padding: 28px;
       border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 8px 28px rgba(20, 45, 80, .06);
+      border-radius: 15px;
+      padding: 25px;
       margin-bottom: 22px;
+      box-shadow: 0 6px 22px rgba(20, 45, 80, .05);
     }
 
-    .auth-wrap {
-      max-width: 480px;
-      margin: 45px auto;
-    }
-
-    h1, h2, h3 { line-height: 1.25; }
-    h1 { font-size: clamp(28px, 5vw, 43px); }
+    .auth { max-width: 480px; margin: 35px auto; }
+    h1 { font-size: clamp(27px, 5vw, 40px); line-height: 1.2; }
     h2 { margin-top: 0; }
     .muted { color: var(--muted); }
     .small { font-size: 13px; }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 22px;
-    }
-
-    .tabs button {
-      flex: 1;
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 9px;
-      padding: 11px;
-    }
-
-    .tabs button.active {
-      background: var(--navy);
-      color: white;
-    }
-
     label {
       display: block;
-      font-weight: 700;
       margin: 13px 0 6px;
+      font-weight: bold;
     }
 
-    input, select, textarea {
+    input, select {
       width: 100%;
       padding: 12px;
       border: 1px solid #cbd6e4;
       border-radius: 9px;
       background: white;
-      color: var(--text);
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus, select:focus {
       outline: 2px solid #b6d0ff;
       border-color: var(--blue);
     }
 
     .btn {
-      border: none;
+      display: inline-block;
+      border: 0;
       border-radius: 9px;
-      padding: 12px 17px;
       background: var(--blue);
       color: white;
-      font-weight: 700;
-      display: inline-block;
+      padding: 12px 17px;
+      font-weight: bold;
       text-align: center;
     }
 
     .btn:hover { filter: brightness(.94); }
-    .btn:disabled { opacity: .5; cursor: not-allowed; }
-    .btn-secondary { background: var(--navy); }
-    .btn-light { background: #e8f0ff; color: #164aab; }
+    .btn-dark { background: var(--navy); }
     .btn-green { background: var(--green); }
-    .full { width: 100%; margin-top: 18px; }
+    .btn-light { background: #e8f0ff; color: #174ca8; }
+    .full { width: 100%; margin-top: 16px; }
 
-    .notice {
-      padding: 13px;
-      background: #fff6df;
-      border: 1px solid #f0d28b;
+    .tabs { display: flex; gap: 8px; margin: 20px 0; }
+    .tabs button {
+      flex: 1;
+      padding: 11px;
+      border: 1px solid var(--border);
       border-radius: 9px;
-      font-size: 14px;
-      margin: 15px 0;
+      background: white;
     }
 
-    .success {
+    .tabs button.active { background: var(--navy); color: white; }
+
+    .notice {
+      background: #fff6df;
+      border: 1px solid #f0d28b;
+      padding: 13px;
+      border-radius: 9px;
+      margin: 16px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .message {
       background: #e9f8ef;
-      border-color: #b8e3c7;
+      border: 1px solid #b8e3c7;
+      border-radius: 9px;
+      padding: 12px;
+      margin-top: 15px;
     }
 
     .hero {
-      padding: 35px;
       background: linear-gradient(130deg, #102746, #1c5dc7);
       color: white;
-      border-radius: 17px;
-      margin-bottom: 24px;
+      padding: 32px;
+      border-radius: 15px;
+      margin-bottom: 22px;
     }
 
-    .hero p { max-width: 650px; color: #e0eaff; }
-    .hero .btn { background: white; color: var(--navy); }
+    .hero p { color: #e0eaff; }
+
+    .progress { display: flex; gap: 7px; margin: 22px 0; }
+    .step {
+      flex: 1;
+      text-align: center;
+      background: #e4eaf3;
+      color: #536176;
+      padding: 9px 3px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    .step.active { background: var(--navy); color: white; }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+      gap: 15px;
     }
 
-    .job-card {
+    .job {
       background: white;
       border: 1px solid var(--border);
-      border-radius: 13px;
-      padding: 19px;
+      border-radius: 12px;
+      padding: 18px;
     }
 
-    .job-card h3 { margin: 0 0 8px; }
-    .job-card p { color: var(--muted); font-size: 14px; }
-    .tag {
-      display: inline-block;
-      padding: 4px 9px;
-      border-radius: 20px;
-      background: #e8f0ff;
-      color: #174ca8;
-      font-size: 12px;
-      margin: 3px 0;
-    }
-
-    .progress {
-      display: flex;
-      gap: 8px;
-      margin: 20px 0;
-    }
-
-    .step {
-      flex: 1;
-      padding: 10px 5px;
-      text-align: center;
-      background: #e4eaf3;
-      color: #546176;
-      border-radius: 8px;
-      font-size: 13px;
-    }
-
-    .step.active {
-      background: var(--navy);
-      color: white;
-    }
+    .job h3 { margin-top: 0; }
+    .job p { color: var(--muted); font-size: 14px; }
 
     .file-preview {
-      padding: 16px;
+      background: #f5f9ff;
       border: 1px dashed #9eb4d1;
-      background: #f7faff;
-      border-radius: 10px;
-      margin-top: 15px;
+      border-radius: 9px;
+      padding: 14px;
+      margin-top: 14px;
       overflow-wrap: anywhere;
     }
 
-    .footer {
-      padding: 25px 5%;
-      background: var(--navy);
-      color: white;
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .footer a { color: #a9cbff; }
-    a { overflow-wrap: anywhere; }
-    .right { text-align: right; }
     .row {
       display: flex;
       align-items: center;
@@ -231,59 +187,64 @@
       gap: 12px;
     }
 
-    @media (max-width: 600px) {
+    footer {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 25px 5%;
+      margin-top: 35px;
+    }
+
+    footer a { color: #a9cbff; }
+
+    @media(max-width: 500px) {
       .panel { padding: 19px; }
-      .hero { padding: 24px; }
-      .progress { gap: 4px; }
-      .step { font-size: 11px; }
+      .hero { padding: 23px; }
+      .step { font-size: 10px; }
     }
   </style>
 </head>
 
 <body>
-
-<header class="topbar">
+<header>
   <div class="brand">CHACH <span>WEB SOLUTION</span></div>
-  <small>Skills • CVs • Remote Work</small>
+  <small>CVs • Skills • Remote Careers</small>
 </header>
 
-<main class="container">
-
-  <!-- PAGE 1: LOGIN AND REGISTRATION -->
-  <section id="authPage" class="auth-wrap">
+<main>
+  <!-- PAGE 1: REGISTER OR LOGIN -->
+  <section id="authPage" class="auth">
     <div class="panel">
-      <h1>Build your remote career.</h1>
+      <h1>Welcome to Chach Web Solution</h1>
       <p class="muted">
-        Sign in or create an account to continue to your CV page
+        Create an account or log in to continue to your CV page
         and explore remote-work opportunities.
       </p>
 
       <div class="tabs">
-        <button id="loginTab" class="active" type="button"
-          onclick="showAuthForm('login')">Login</button>
-        <button id="registerTab" type="button"
-          onclick="showAuthForm('register')">Create account</button>
+        <button type="button" id="loginTab" class="active">Login</button>
+        <button type="button" id="registerTab">Create account</button>
       </div>
 
       <form id="loginForm">
         <label for="loginEmail">Email address</label>
-        <input id="loginEmail" type="email" autocomplete="username"
+        <input id="loginEmail" type="email" autocomplete="email"
           placeholder="you@example.com" required>
 
         <label for="loginPassword">Password</label>
         <input id="loginPassword" type="password"
-          autocomplete="current-password" placeholder="Your password" required>
+          autocomplete="current-password" placeholder="Enter password" required>
 
         <button class="btn full" type="submit">Login and continue</button>
         <p class="small">
-          <a href="#" onclick="showForgotForm(); return false;">Forgot password?</a>
+          <a href="#" id="forgotLink">Forgot password?</a>
         </p>
       </form>
 
       <form id="registerForm" class="hidden">
-        <label for="registerName">Full name</label>
-        <input id="registerName" type="text" autocomplete="name"
-          placeholder="Your full name" required>
+        <label for="fullName">Full name</label>
+        <input id="fullName" type="text" autocomplete="name"
+          placeholder="Enter your full name" required>
 
         <label for="registerEmail">Email address</label>
         <input id="registerEmail" type="email" autocomplete="email"
@@ -297,105 +258,84 @@
         <label for="confirmPassword">Confirm password</label>
         <input id="confirmPassword" type="password"
           autocomplete="new-password" minlength="8"
-          placeholder="Repeat your password" required>
+          placeholder="Enter password again" required>
 
         <button class="btn full" type="submit">Create account</button>
       </form>
 
-      <form id="forgotForm" class="hidden">
-        <p>Enter your email address to request password-reset instructions.</p>
-        <label for="forgotEmail">Email address</label>
-        <input id="forgotEmail" type="email" required>
-        <button class="btn full" type="submit">Request reset</button>
-        <button class="btn btn-light full" type="button"
-          onclick="showAuthForm('login')">Back to login</button>
-        <p class="small muted">
-          Password reset needs a real email service and backend.
-        </p>
-      </form>
+      <div id="authMessage" class="message hidden" role="status"></div>
 
-      <div id="authMessage" class="notice hidden" role="status"></div>
-
-      <div class="notice">
-        <strong>Account security:</strong> This is a front-end demonstration.
-        Do not use a real or reused password here. A production website needs
-        secure server-side accounts and authentication.
+      <div class="notice small">
+        This version demonstrates account flow in your browser. It does not
+        create permanent accounts or provide secure authentication. Do not
+        use a real or reused password.
       </div>
     </div>
   </section>
 
-  <!-- PAGES AFTER LOGIN -->
+  <!-- MEMBERS AREA: HIDDEN UNTIL DEMO LOGIN -->
   <section id="memberArea" class="hidden">
-
     <div class="row">
       <div>
-        <strong id="welcomeName">Welcome!</strong>
-        <div class="small muted">Your Chach Web Solution workspace</div>
+        <strong id="welcome"></strong>
+        <div class="muted small">Your member workspace</div>
       </div>
-      <button class="btn btn-secondary" type="button"
-        onclick="logout()">Logout</button>
+      <button class="btn btn-dark" id="logoutBtn" type="button">Logout</button>
     </div>
 
     <div class="progress">
-      <div id="step1" class="step active">1. Account</div>
-      <div id="step2" class="step">2. Your CV</div>
-      <div id="step3" class="step">3. Find jobs</div>
+      <div class="step active">1. Account</div>
+      <div id="cvStep" class="step active">2. Your CV</div>
+      <div id="jobsStep" class="step">3. Remote jobs</div>
     </div>
 
-    <!-- PAGE 2: CV COMES FIRST AFTER LOGIN -->
+    <!-- PAGE 2: CV UPLOAD -->
     <section id="cvPage" class="panel">
-      <h1>Your CV comes first.</h1>
+      <h1>Upload your CV</h1>
       <p class="muted">
-        Upload a CV from your phone or computer. You can also proceed
-        without uploading one if you do not have it ready.
+        This is the next page after successful demo registration or login.
+        Select your CV, then continue to remote jobs.
       </p>
 
-      <label for="cvFile">Choose your CV</label>
-      <input id="cvFile" type="file"
-        accept=".pdf,.doc,.docx,.rtf,.txt">
+      <label for="cvFile">Choose CV file</label>
+      <input id="cvFile" type="file" accept=".pdf,.doc,.docx,.rtf,.txt">
 
       <div id="cvPreview" class="file-preview hidden"></div>
 
       <div class="notice">
-        <strong>Privacy:</strong> In this demonstration, your CV is not
-        uploaded to a server. Selecting a file only displays its name.
-        Do not assume it is saved or submitted to employers.
+        Your file is only selected in your browser. It is not uploaded
+        or saved on a server.
       </div>
 
-      <button class="btn" type="button" onclick="continueToJobs()">
+      <button class="btn" id="continueBtn" type="button">
         Continue to remote jobs →
       </button>
     </section>
 
-    <!-- PAGE 3: REMOTE JOBS -->
+    <!-- PAGE 3: JOB CATEGORIES -->
     <section id="jobsPage" class="hidden">
       <div class="hero">
-        <h1>Discover remote-work opportunities.</h1>
+        <h1>Find remote-work opportunities</h1>
         <p>
-          Explore job types, understand the skills employers may need,
-          and prepare to apply. Always confirm that a vacancy is genuine
-          on the employer's official website.
+          Explore different career categories, identify the skills you need,
+          and look for legitimate vacancies on official employer websites.
         </p>
-        <a class="btn" href="#jobResults">Explore job categories</a>
       </div>
 
       <div class="panel">
         <div class="row">
-          <div>
-            <h2>Find your next opportunity</h2>
-            <p class="muted">Search by role or category.</p>
-          </div>
-          <button class="btn btn-light" type="button"
-            onclick="backToCV()">← Back to CV</button>
+          <h2>Explore job categories</h2>
+          <button class="btn btn-light" id="backToCV" type="button">
+            ← Back to CV
+          </button>
         </div>
 
-        <label for="jobSearch">Search job roles</label>
+        <label for="jobSearch">Search jobs</label>
         <input id="jobSearch" type="search"
-          placeholder="e.g. writing, data entry, engineering"
-          oninput="renderJobs()">
+          placeholder="Try writing, engineering, data entry...">
 
-        <label for="jobCategory">Filter by category</label>
-        <select id="jobCategory" onchange="renderJobs()">
+        <label for="jobCategory">Filter category</label>
+        <select id="jobCategory">
           <option value="all">All categories</option>
         </select>
 
@@ -404,223 +344,304 @@
 
       <div id="jobResults" class="grid"></div>
 
-      <div class="panel" id="paymentSection">
+      <section class="panel" id="paymentSection">
         <h2>Application credit</h2>
-        <p>
-          The proposed application credit is <strong>KSh 100</strong>.
-          Before paying, confirm that the service is fully operational
-          and that its terms are clear.
-        </p>
+        <p>Proposed application-credit price: <strong>KSh 100</strong>.</p>
 
         <div class="notice">
-          <strong>M-Pesa payment instructions (configured by site owner)</strong><br>
-          Payment number: <strong>0799446312</strong><br>
-          Amount: <strong>KSh 100</strong>
+          <strong>M-Pesa number:</strong> 0799446312<br>
+          <strong>Amount:</strong> KSh 100
         </div>
 
         <label for="mpesaReference">M-Pesa transaction reference</label>
         <input id="mpesaReference" type="text"
-          placeholder="Enter transaction code if you have paid">
+          placeholder="Enter your transaction code">
 
-        <button class="btn btn-green" type="button"
-          onclick="submitPaymentReference()">
+        <button class="btn btn-green full" id="referenceBtn" type="button">
           Submit reference for review
         </button>
 
-        <p id="paymentMessage" class="small muted" role="status"></p>
+        <p id="paymentMessage" class="muted small" role="status"></p>
 
-        <div class="notice">
-          This form does not process payments or verify M-Pesa transactions.
-          Submitting a code does not activate credit or guarantee a job
-          application. Automatic verification requires a secure server
-          integration with a supported payment provider.
+        <div class="notice small">
+          This form does not process or verify payments. A reference entered
+          here does not activate credit. Secure payment integration and
+          server-side verification must be added before accepting payments.
         </div>
-      </div>
+      </section>
     </section>
   </section>
 </main>
 
-<footer class="footer">
+<footer>
   <strong>Chach Web Solution</strong>
   <p>Helping people prepare for opportunities in the digital economy.</p>
-  <p>
-    Email: <a href="mailto:chachaevanx@gmail.com">chachaevanx@gmail.com</a>
-  </p>
-  <p>
-    WhatsApp:
-    <a href="https://wa.me/254799446312" target="_blank"
-      rel="noopener noreferrer">0799 446 312</a>
-  </p>
-  <p class="small">
-    Always verify job offers. Never pay an unverified recruiter for a promised job.
-  </p>
+  <p>Email: <a href="mailto:chachaevanx@gmail.com">chachaevanx@gmail.com</a></p>
+  <p>WhatsApp: <a href="https://wa.me/254799446312">0799 446 312</a></p>
+  <p class="small">Verify job offers before sharing personal information or money.</p>
 </footer>
 
 <script>
-  /*
-    DEMONSTRATION ONLY.
-    This front-end does not provide secure authentication.
-    Do not store real passwords in browser storage.
-    Use a backend authentication provider before public launch.
-  */
+(function () {
+  "use strict";
 
-  const DEMO_SESSION_KEY = "chach_demo_session";
-  let selectedCVName = "";
+  const SESSION_KEY = "chachDemoUser";
+  const $ = id => document.getElementById(id);
 
-  const jobCatalog = [
-    ["Data Entry", "Typing, spreadsheets and accurate data handling"],
-    ["Writing", "Articles, blogs, copywriting and web content"],
-    ["Editing and Proofreading", "Grammar, editing and document review"],
-    ["Translation", "Language translation and localisation"],
-    ["Graphic Design", "Logos, branding and visual design"],
-    ["Web Development", "Websites, HTML, CSS and JavaScript"],
-    ["Software Development", "Applications and software engineering"],
-    ["AI and Machine Learning", "AI tools, models and automation"],
-    ["Data Analytics", "Reports, spreadsheets and data visualisation"],
-    ["Cybersecurity", "Security analysis and risk prevention"],
-    ["IT Support", "Troubleshooting and technical support"],
-    ["Electrical Engineering", "Electrical design and technical documentation"],
-    ["Virtual Assistance", "Scheduling, administration and online support"],
-    ["Customer Support", "Email, chat and customer service"],
-    ["Sales", "Lead generation and remote sales"],
-    ["Digital Marketing", "SEO, campaigns and online growth"],
-    ["Social Media", "Social media management and content planning"],
-    ["Online Teaching", "Tutoring and virtual education"],
-    ["Finance and Accounting", "Bookkeeping and financial reporting"],
-    ["Human Resources", "Recruitment and HR administration"],
-    ["Project Management", "Planning, coordination and delivery"],
-    ["Research", "Online research and information gathering"],
-    ["Video Editing", "Video production and post-production"],
-    ["Photography", "Photo editing and visual content"],
-    ["E-commerce", "Online stores and product management"],
-    ["Quality Assurance", "Software testing and quality checks"],
-    ["Product Management", "Product planning and development"],
-    ["Science and Environment", "Scientific research and environmental work"],
-    ["Travel and Hospitality", "Travel support and hospitality administration"],
-    ["Architecture and Construction", "CAD, drafting and project support"],
-    ["Legal Support", "Legal research and document administration"],
-    ["Business Consulting", "Business analysis and advisory support"],
-    ["Content Moderation", "Reviewing online content against platform rules"],
-    ["Logistics and Supply Chain", "Planning, coordination and logistics support"],
-    ["Telecommunications", "Network and communications support"],
-    ["Real Estate", "Property administration and research"],
-    ["Insurance", "Claims support and insurance administration"],
-    ["Nonprofit and Community", "Programme and community support"],
-    ["Human Language and Voice", "Transcription, voice recording and language tasks"]
+  const authPage = $("authPage");
+  const memberArea = $("memberArea");
+  const loginForm = $("loginForm");
+  const registerForm = $("registerForm");
+  const authMessage = $("authMessage");
+
+  // Demonstration categories, not confirmed live vacancies.
+  const categories = [
+    ["Data Entry", "Typing, spreadsheets and accurate data handling."],
+    ["Writing", "Articles, blogs, copywriting and web content."],
+    ["Editing and Proofreading", "Grammar and document review."],
+    ["Translation", "Language translation and localisation."],
+    ["Graphic Design", "Logos, branding and visual design."],
+    ["Web Development", "Website design, HTML, CSS and JavaScript."],
+    ["Software Development", "Software and application development."],
+    ["AI and Machine Learning", "AI tools, models and automation."],
+    ["Data Analytics", "Data analysis, reports and visualisation."],
+    ["Cybersecurity", "Security analysis and risk prevention."],
+    ["IT Support", "Troubleshooting and technical support."],
+    ["Electrical Engineering", "Electrical design and technical documentation."],
+    ["Virtual Assistance", "Online administration and scheduling."],
+    ["Customer Support", "Email, chat and customer service."],
+    ["Sales", "Lead generation and remote sales."],
+    ["Digital Marketing", "SEO and digital campaigns."],
+    ["Social Media", "Social media management and planning."],
+    ["Online Teaching", "Tutoring and virtual education."],
+    ["Finance and Accounting", "Bookkeeping and financial reporting."],
+    ["Human Resources", "Recruitment and HR administration."],
+    ["Project Management", "Planning and project coordination."],
+    ["Research", "Online research and information gathering."],
+    ["Video Editing", "Video production and editing."],
+    ["E-commerce", "Online stores and product management."],
+    ["Quality Assurance", "Software testing and quality checks."],
+    ["Product Management", "Product planning and development."],
+    ["Architecture and Construction", "CAD, drafting and project support."],
+    ["Legal Support", "Legal research and document administration."],
+    ["Business Consulting", "Business analysis and advisory work."],
+    ["Content Moderation", "Reviewing online content."],
+    ["Logistics and Supply Chain", "Planning and logistics coordination."],
+    ["Telecommunications", "Network and communications support."],
+    ["Real Estate", "Property administration and research."],
+    ["Insurance", "Claims and insurance administration."],
+    ["Nonprofit and Community", "Programme and community support."],
+    ["Transcription and Voice", "Transcription and voice recording."]
   ];
 
-  function showAuthForm(type) {
-    document.getElementById("loginForm").classList.toggle("hidden", type !== "login");
-    document.getElementById("registerForm").classList.toggle("hidden", type !== "register");
-    document.getElementById("forgotForm").classList.add("hidden");
-    document.getElementById("loginTab").classList.toggle("active", type === "login");
-    document.getElementById("registerTab").classList.toggle("active", type === "register");
-    setAuthMessage("");
+  function setMessage(message) {
+    authMessage.textContent = message;
+    authMessage.classList.toggle("hidden", !message);
   }
 
-  function showForgotForm() {
-    document.getElementById("loginForm").classList.add("hidden");
-    document.getElementById("registerForm").classList.add("hidden");
-    document.getElementById("forgotForm").classList.remove("hidden");
-    setAuthMessage("");
+  function switchTab(tab) {
+    const isLogin = tab === "login";
+    loginForm.classList.toggle("hidden", !isLogin);
+    registerForm.classList.toggle("hidden", isLogin);
+    $("loginTab").classList.toggle("active", isLogin);
+    $("registerTab").classList.toggle("active", !isLogin);
+    setMessage("");
   }
 
-  function setAuthMessage(message) {
-    const box = document.getElementById("authMessage");
-    box.textContent = message;
-    box.classList.toggle("hidden", !message);
+  $("loginTab").addEventListener("click", () => switchTab("login"));
+  $("registerTab").addEventListener("click", () => switchTab("register"));
+
+  function openCVPage(user) {
+    authPage.classList.add("hidden");
+    memberArea.classList.remove("hidden");
+    $("welcome").textContent = "Welcome, " + user.name + "!";
+    $("cvPage").classList.remove("hidden");
+    $("jobsPage").classList.add("hidden");
+    window.scrollTo(0, 0);
   }
 
-  function enterDemo(name, email) {
-    // Session data is for page-flow demonstration only, not security.
-    sessionStorage.setItem(DEMO_SESSION_KEY, JSON.stringify({
-      name: name,
-      email: email
-    }));
-    showMemberArea(name);
+  function saveDemoSession(user) {
+    try {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(user));
+      openCVPage(user);
+    } catch (error) {
+      setMessage("Your browser could not start the demo session. Please enable site storage and try again.");
+    }
   }
 
-  document.getElementById("registerForm").addEventListener("submit", function(event) {
+  // Registration is handled by the form submit event.
+  // The submit listener works whether the user taps the button or presses Enter.
+  registerForm.addEventListener("submit", function (event) {
     event.preventDefault();
+    setMessage("");
 
-    const name = document.getElementById("registerName").value.trim();
-    const email = document.getElementById("registerEmail").value.trim();
-    const password = document.getElementById("registerPassword").value;
-    const confirmation = document.getElementById("confirmPassword").value;
+    const name = $("fullName").value.trim();
+    const email = $("registerEmail").value.trim();
+    const password = $("registerPassword").value;
+    const confirmation = $("confirmPassword").value;
+
+    if (!name || !email || !password || !confirmation) {
+      setMessage("Please fill in every field.");
+      return;
+    }
+
+    if (!$("registerEmail").checkValidity()) {
+      setMessage("Please enter a valid email address.");
+      return;
+    }
 
     if (password.length < 8) {
-      setAuthMessage("Please use a password with at least 8 characters.");
+      setMessage("Your password must contain at least 8 characters.");
       return;
     }
 
     if (password !== confirmation) {
-      setAuthMessage("The passwords do not match.");
+      setMessage("Your passwords do not match.");
       return;
     }
 
-    setAuthMessage(
-      "Demo account created for this browser session. This is not a real registered account."
-    );
-    enterDemo(name, email);
+    // Never save the password. This is a temporary demo session only.
+    saveDemoSession({ name: name, email: email });
   });
 
-  document.getElementById("loginForm").addEventListener("submit", function(event) {
+  loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
+    setMessage("");
 
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
+    const email = $("loginEmail").value.trim().toLowerCase();
+    const password = $("loginPassword").value;
 
     if (!email || !password) {
-      setAuthMessage("Enter your email and password.");
+      setMessage("Please enter your email and password.");
       return;
     }
 
-    // No password is saved or verified against a real account.
-    // Replace with a real authentication API before production.
-    const savedSession = sessionStorage.getItem(DEMO_SESSION_KEY);
-
-    if (savedSession) {
-      const user = JSON.parse(savedSession);
-      if (user.email.toLowerCase() === email.toLowerCase()) {
-        showMemberArea(user.name);
-        return;
-      }
+    let user = null;
+    try {
+      user = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null");
+    } catch (error) {
+      user = null;
     }
 
-    setAuthMessage(
-      "This is demo login only. Create a demo account in this browser session, or connect a real authentication service."
-    );
+    if (!user || user.email.toLowerCase() !== email) {
+      setMessage("No demo account for this email in this browser session. Choose Create account first.");
+      return;
+    }
+
+    // The password cannot be verified without a real authentication service.
+    openCVPage(user);
   });
 
-  document.getElementById("forgotForm").addEventListener("submit", function(event) {
+  $("forgotLink").addEventListener("click", function (event) {
     event.preventDefault();
-    setAuthMessage(
-      "Password-reset emails are not configured yet. Connect a secure authentication service to enable this feature."
-    );
-    document.getElementById("forgotForm").classList.remove("hidden");
+    setMessage("Password reset is not connected yet. A real authentication service is needed to send reset emails.");
   });
 
-  function showMemberArea(name) {
-    document.getElementById("authPage").classList.add("hidden");
-    document.getElementById("memberArea").classList.remove("hidden");
-    document.getElementById("welcomeName").textContent =
-      "Welcome, " + (name || "member") + "!";
-    document.getElementById("cvPage").classList.remove("hidden");
-    document.getElementById("jobsPage").classList.add("hidden");
-    updateSteps(2);
+  $("logoutBtn").addEventListener("click", function () {
+    sessionStorage.removeItem(SESSION_KEY);
+    memberArea.classList.add("hidden");
+    authPage.classList.remove("hidden");
+    loginForm.reset();
+    registerForm.reset();
+    $("cvFile").value = "";
+    $("cvPreview").classList.add("hidden");
+    switchTab("login");
+    window.scrollTo(0, 0);
+  });
+
+  $("cvFile").addEventListener("change", function () {
+    const file = this.files && this.files[0];
+    const preview = $("cvPreview");
+
+    if (!file) {
+      preview.classList.add("hidden");
+      return;
+    }
+
+    if (!/\.(pdf|doc|docx|rtf|txt)$/i.test(file.name)) {
+      alert("Choose a PDF, DOC, DOCX, RTF or TXT file.");
+      this.value = "";
+      preview.classList.add("hidden");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      alert("Please choose a CV smaller than 10 MB.");
+      this.value = "";
+      preview.classList.add("hidden");
+      return;
+    }
+
+    preview.textContent = "Selected CV: " + file.name +
+      ". This file has not been uploaded to a server.";
+    preview.classList.remove("hidden");
+  });
+
+  $("continueBtn").addEventListener("click", function () {
+    $("cvPage").classList.add("hidden");
+    $("jobsPage").classList.remove("hidden");
+    $("cvStep").classList.remove("active");
+    $("jobsStep").classList.add("active");
+    window.scrollTo(0, 0);
+  });
+
+  $("backToCV").addEventListener("click", function () {
+    $("jobsPage").classList.add("hidden");
+    $("cvPage").classList.remove("hidden");
+    $("jobsStep").classList.remove("active");
+    $("cvStep").classList.add("active");
+    window.scrollTo(0, 0);
+  });
+
+  function renderJobs() {
+    const query = $("jobSearch").value.toLowerCase().trim();
+    const category = $("jobCategory").value;
+    const results = $("jobResults");
+    results.replaceChildren();
+
+    const matches = categories.filter(function (item) {
+      return (category === "all" || item[0] === category) &&
+        (item[0] + " " + item[1]).toLowerCase().includes(query);
+    });
+
+    $("jobCount").textContent = matches.length + " categories found.";
+
+    matches.forEach(function (item) {
+      const card = document.createElement("article");
+      card.className = "job";
+
+      const title = document.createElement("h3");
+      title.textContent = item[0];
+
+      const description = document.createElement("p");
+      description.textContent = item[1];
+
+      const button = document.createElement("button");
+      button.className = "btn full";
+      button.type = "button";
+      button.textContent = "Explore this role";
+      button.addEventListener("click", function () {
+        alert(item[0] + "\n\n" + item[1] +
+          "\n\nThis is a category, not a verified job vacancy. Search official employer websites for current openings.");
+      });
+
+      card.append(title, description, button);
+      results.appendChild(card);
+    });
+
+    if (!matches.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "No categories found. Try a different search.";
+      results.appendChild(empty);
+    }
   }
 
-  function logout() {
-    sessionStorage.removeItem(DEMO_SESSION_KEY);
-    document.getElementById("memberArea").classList.add("hidden");
-    document.getElementById("authPage").classList.remove("hidden");
-    document.getElementById("loginForm").reset();
-    document.getElementById("registerForm").reset();
-    showAuthForm("login");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  categories.forEach(function (item) {
+    const option = document.createElement("option");
+    option.value = item[0];
+    option.textContent = item[0];
+    $("jobCategory").appendChild(option);
+  });
 
-  function updateSteps(active) {
-    [1, 2, 3].forEach(function(number) {
-      document.getElementById("step" + number).classList.toggle(
-       
+  $("jobSearch").addEventListener("input", renderJobs);
+  $("jobCategory").addEventListener("change", re
