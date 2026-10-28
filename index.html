@@ -1,647 +1,243 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Chach Web Solution helps people prepare for remote-work opportunities.">
-  <title>Chach Web Solution</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHACH WEB SOLUTION | M-Pesa Express Checkout</title>
+    <style>
+        :root {
+            --primary-color: #008751;
+            --primary-hover: #006b40;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --error-color: #d9534f;
+            --success-color: #5cb85c;
+        }
 
-  <style>
-    :root {
-      --navy: #102746;
-      --blue: #1769ff;
-      --bg: #f3f7fc;
-      --text: #172337;
-      --muted: #68768b;
-      --border: #dce5f0;
-      --green: #168653;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    * { box-sizing: border-box; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-    }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
 
-    button, input, select { font: inherit; }
-    button { cursor: pointer; }
-    .hidden { display: none !important; }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
-    header {
-      background: var(--navy);
-      color: white;
-      padding: 17px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
 
-    .brand { font-size: 21px; font-weight: bold; }
-    .brand span { color: #76aaff; }
+        .header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
 
-    main {
-      width: min(1050px, 92%);
-      margin: 28px auto;
-      min-height: 65vh;
-    }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    .panel {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 25px;
-      margin-bottom: 22px;
-      box-shadow: 0 6px 22px rgba(20, 45, 80, .05);
-    }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-    .auth { max-width: 480px; margin: 35px auto; }
-    h1 { font-size: clamp(27px, 5vw, 40px); line-height: 1.2; }
-    h2 { margin-top: 0; }
-    .muted { color: var(--muted); }
-    .small { font-size: 13px; }
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccd1d1;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    label {
-      display: block;
-      margin: 13px 0 6px;
-      font-weight: bold;
-    }
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 135, 81, 0.15);
+        }
 
-    input, select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd6e4;
-      border-radius: 9px;
-      background: white;
-    }
+        .hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
 
-    input:focus, select:focus {
-      outline: 2px solid #b6d0ff;
-      border-color: var(--blue);
-    }
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
 
-    .btn {
-      display: inline-block;
-      border: 0;
-      border-radius: 9px;
-      background: var(--blue);
-      color: white;
-      padding: 12px 17px;
-      font-weight: bold;
-      text-align: center;
-    }
+        button:hover {
+            background-color: var(--primary-hover);
+        }
 
-    .btn:hover { filter: brightness(.94); }
-    .btn-dark { background: var(--navy); }
-    .btn-green { background: var(--green); }
-    .btn-light { background: #e8f0ff; color: #174ca8; }
-    .full { width: 100%; margin-top: 16px; }
+        button:disabled {
+            background-color: #a3c9b7;
+            cursor: not-allowed;
+        }
 
-    .tabs { display: flex; gap: 8px; margin: 20px 0; }
-    .tabs button {
-      flex: 1;
-      padding: 11px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: white;
-    }
+        #statusBox {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+            line-height: 1.4;
+        }
 
-    .tabs button.active { background: var(--navy); color: white; }
+        .status-loading {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            display: block !important;
+        }
 
-    .notice {
-      background: #fff6df;
-      border: 1px solid #f0d28b;
-      padding: 13px;
-      border-radius: 9px;
-      margin: 16px 0;
-      overflow-wrap: anywhere;
-    }
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block !important;
+        }
 
-    .message {
-      background: #e9f8ef;
-      border: 1px solid #b8e3c7;
-      border-radius: 9px;
-      padding: 12px;
-      margin-top: 15px;
-    }
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block !important;
+        }
 
-    .hero {
-      background: linear-gradient(130deg, #102746, #1c5dc7);
-      color: white;
-      padding: 32px;
-      border-radius: 15px;
-      margin-bottom: 22px;
-    }
-
-    .hero p { color: #e0eaff; }
-
-    .progress { display: flex; gap: 7px; margin: 22px 0; }
-    .step {
-      flex: 1;
-      text-align: center;
-      background: #e4eaf3;
-      color: #536176;
-      padding: 9px 3px;
-      border-radius: 8px;
-      font-size: 12px;
-    }
-
-    .step.active { background: var(--navy); color: white; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
-    }
-
-    .job {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-    }
-
-    .job h3 { margin-top: 0; }
-    .job p { color: var(--muted); font-size: 14px; }
-
-    .file-preview {
-      background: #f5f9ff;
-      border: 1px dashed #9eb4d1;
-      border-radius: 9px;
-      padding: 14px;
-      margin-top: 14px;
-      overflow-wrap: anywhere;
-    }
-
-    .row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    footer {
-      background: var(--navy);
-      color: white;
-      text-align: center;
-      padding: 25px 5%;
-      margin-top: 35px;
-    }
-
-    footer a { color: #a9cbff; }
-
-    @media(max-width: 500px) {
-      .panel { padding: 19px; }
-      .hero { padding: 23px; }
-      .step { font-size: 10px; }
-    }
-  </style>
+        .footer-note {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+    </style>
 </head>
-
 <body>
-<header>
-  <div class="brand">CHACH <span>WEB SOLUTION</span></div>
-  <small>CVs • Skills • Remote Careers</small>
-</header>
 
-<main>
-  <!-- PAGE 1: REGISTER OR LOGIN -->
-  <section id="authPage" class="auth">
-    <div class="panel">
-      <h1>Welcome to Chach Web Solution</h1>
-      <p class="muted">
-        Create an account or log in to continue to your CV page
-        and explore remote-work opportunities.
-      </p>
-
-      <div class="tabs">
-        <button type="button" id="loginTab" class="active">Login</button>
-        <button type="button" id="registerTab">Create account</button>
-      </div>
-
-      <form id="loginForm">
-        <label for="loginEmail">Email address</label>
-        <input id="loginEmail" type="email" autocomplete="email"
-          placeholder="you@example.com" required>
-
-        <label for="loginPassword">Password</label>
-        <input id="loginPassword" type="password"
-          autocomplete="current-password" placeholder="Enter password" required>
-
-        <button class="btn full" type="submit">Login and continue</button>
-        <p class="small">
-          <a href="#" id="forgotLink">Forgot password?</a>
-        </p>
-      </form>
-
-      <form id="registerForm" class="hidden">
-        <label for="fullName">Full name</label>
-        <input id="fullName" type="text" autocomplete="name"
-          placeholder="Enter your full name" required>
-
-        <label for="registerEmail">Email address</label>
-        <input id="registerEmail" type="email" autocomplete="email"
-          placeholder="you@example.com" required>
-
-        <label for="registerPassword">Create password</label>
-        <input id="registerPassword" type="password"
-          autocomplete="new-password" minlength="8"
-          placeholder="At least 8 characters" required>
-
-        <label for="confirmPassword">Confirm password</label>
-        <input id="confirmPassword" type="password"
-          autocomplete="new-password" minlength="8"
-          placeholder="Enter password again" required>
-
-        <button class="btn full" type="submit">Create account</button>
-      </form>
-
-      <div id="authMessage" class="message hidden" role="status"></div>
-
-      <div class="notice small">
-        This version demonstrates account flow in your browser. It does not
-        create permanent accounts or provide secure authentication. Do not
-        use a real or reused password.
-      </div>
-    </div>
-  </section>
-
-  <!-- MEMBERS AREA: HIDDEN UNTIL DEMO LOGIN -->
-  <section id="memberArea" class="hidden">
-    <div class="row">
-      <div>
-        <strong id="welcome"></strong>
-        <div class="muted small">Your member workspace</div>
-      </div>
-      <button class="btn btn-dark" id="logoutBtn" type="button">Logout</button>
-    </div>
-
-    <div class="progress">
-      <div class="step active">1. Account</div>
-      <div id="cvStep" class="step active">2. Your CV</div>
-      <div id="jobsStep" class="step">3. Remote jobs</div>
-    </div>
-
-    <!-- PAGE 2: CV UPLOAD -->
-    <section id="cvPage" class="panel">
-      <h1>Upload your CV</h1>
-      <p class="muted">
-        This is the next page after successful demo registration or login.
-        Select your CV, then continue to remote jobs.
-      </p>
-
-      <label for="cvFile">Choose CV file</label>
-      <input id="cvFile" type="file" accept=".pdf,.doc,.docx,.rtf,.txt">
-
-      <div id="cvPreview" class="file-preview hidden"></div>
-
-      <div class="notice">
-        Your file is only selected in your browser. It is not uploaded
-        or saved on a server.
-      </div>
-
-      <button class="btn" id="continueBtn" type="button">
-        Continue to remote jobs →
-      </button>
-    </section>
-
-    <!-- PAGE 3: JOB CATEGORIES -->
-    <section id="jobsPage" class="hidden">
-      <div class="hero">
-        <h1>Find remote-work opportunities</h1>
-        <p>
-          Explore different career categories, identify the skills you need,
-          and look for legitimate vacancies on official employer websites.
-        </p>
-      </div>
-
-      <div class="panel">
-        <div class="row">
-          <h2>Explore job categories</h2>
-          <button class="btn btn-light" id="backToCV" type="button">
-            ← Back to CV
-          </button>
+    <div class="container">
+        <div class="header">
+            <h1>CHACH WEB SOLUTION</h1>
+            <p>Secure M-Pesa Express Checkout</p>
         </div>
 
-        <label for="jobSearch">Search jobs</label>
-        <input id="jobSearch" type="search"
-          placeholder="Try writing, engineering, data entry...">
+        <form id="checkoutForm">
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="tel" id="phoneNumber" placeholder="e.g. 2547XXXXXXXX" required pattern="^(2547|07)\d{8}$">
+                <div class="hint">Format: 2547XXXXXXXX or 07XXXXXXXX</div>
+            </div>
 
-        <label for="jobCategory">Filter category</label>
-        <select id="jobCategory">
-          <option value="all">All categories</option>
-        </select>
+            <div class="form-group">
+                <label for="amount">Amount (KES)</label>
+                <input type="number" id="amount" placeholder="Enter amount" min="1" required>
+            </div>
 
-        <p id="jobCount" class="muted small"></p>
-      </div>
+            <button type="submit" id="payButton">Pay with M-Pesa</button>
+        </form>
 
-      <div id="jobResults" class="grid"></div>
+        <div id="statusBox"></div>
 
-      <section class="panel" id="paymentSection">
-        <h2>Application credit</h2>
-        <p>Proposed application-credit price: <strong>KSh 100</strong>.</p>
-
-        <div class="notice">
-          <strong>M-Pesa number:</strong> 0799446312<br>
-          <strong>Amount:</strong> KSh 100
+        <div class="footer-note">
+            Powered by Safaricom Daraja API
         </div>
+    </div>
 
-        <label for="mpesaReference">M-Pesa transaction reference</label>
-        <input id="mpesaReference" type="text"
-          placeholder="Enter your transaction code">
+    <script>
+        const form = document.getElementById('checkoutForm');
+        const payButton = document.getElementById('payButton');
+        const statusBox = document.getElementById('statusBox');
 
-        <button class="btn btn-green full" id="referenceBtn" type="button">
-          Submit reference for review
-        </button>
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            let phoneInput = document.getElementById('phoneNumber').value.trim();
+            const amount = document.getElementById('amount').value.trim();
 
-        <p id="paymentMessage" class="muted small" role="status"></p>
+            // Normalize phone number to 2547XXXXXXXX format if it starts with 07
+            if (phoneInput.startsWith('07')) {
+                phoneInput = '254' + phoneInput.slice(1);
+            }
 
-        <div class="notice small">
-          This form does not process or verify payments. A reference entered
-          here does not activate credit. Secure payment integration and
-          server-side verification must be added before accepting payments.
-        </div>
-      </section>
-    </section>
-  </section>
-</main>
+            // Update UI to loading state
+            payButton.disabled = true;
+            payButton.innerText = "Processing...";
+            statusBox.className = "status-loading";
+            statusBox.innerText = "Initiating STK Push. Please check your phone for the M-Pesa prompt...";
 
-<footer>
-  <strong>Chach Web Solution</strong>
-  <p>Helping people prepare for opportunities in the digital economy.</p>
-  <p>Email: <a href="mailto:chachaevanx@gmail.com">chachaevanx@gmail.com</a></p>
-  <p>WhatsApp: <a href="https://wa.me/254799446312">0799 446 312</a></p>
-  <p class="small">Verify job offers before sharing personal information or money.</p>
-</footer>
+            try {
+                // Connects to your backend endpoint created earlier
+                const response = await fetch('http://localhost:3000/api/v1/stkpush', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phoneNumber: phoneInput,
+                        amount: amount
+                    })
+                });
 
-<script>
-(function () {
-  "use strict";
+                const result = await response.json();
 
-  const SESSION_KEY = "chachDemoUser";
-  const $ = id => document.getElementById(id);
-
-  const authPage = $("authPage");
-  const memberArea = $("memberArea");
-  const loginForm = $("loginForm");
-  const registerForm = $("registerForm");
-  const authMessage = $("authMessage");
-
-  // Demonstration categories, not confirmed live vacancies.
-  const categories = [
-    ["Data Entry", "Typing, spreadsheets and accurate data handling."],
-    ["Writing", "Articles, blogs, copywriting and web content."],
-    ["Editing and Proofreading", "Grammar and document review."],
-    ["Translation", "Language translation and localisation."],
-    ["Graphic Design", "Logos, branding and visual design."],
-    ["Web Development", "Website design, HTML, CSS and JavaScript."],
-    ["Software Development", "Software and application development."],
-    ["AI and Machine Learning", "AI tools, models and automation."],
-    ["Data Analytics", "Data analysis, reports and visualisation."],
-    ["Cybersecurity", "Security analysis and risk prevention."],
-    ["IT Support", "Troubleshooting and technical support."],
-    ["Electrical Engineering", "Electrical design and technical documentation."],
-    ["Virtual Assistance", "Online administration and scheduling."],
-    ["Customer Support", "Email, chat and customer service."],
-    ["Sales", "Lead generation and remote sales."],
-    ["Digital Marketing", "SEO and digital campaigns."],
-    ["Social Media", "Social media management and planning."],
-    ["Online Teaching", "Tutoring and virtual education."],
-    ["Finance and Accounting", "Bookkeeping and financial reporting."],
-    ["Human Resources", "Recruitment and HR administration."],
-    ["Project Management", "Planning and project coordination."],
-    ["Research", "Online research and information gathering."],
-    ["Video Editing", "Video production and editing."],
-    ["E-commerce", "Online stores and product management."],
-    ["Quality Assurance", "Software testing and quality checks."],
-    ["Product Management", "Product planning and development."],
-    ["Architecture and Construction", "CAD, drafting and project support."],
-    ["Legal Support", "Legal research and document administration."],
-    ["Business Consulting", "Business analysis and advisory work."],
-    ["Content Moderation", "Reviewing online content."],
-    ["Logistics and Supply Chain", "Planning and logistics coordination."],
-    ["Telecommunications", "Network and communications support."],
-    ["Real Estate", "Property administration and research."],
-    ["Insurance", "Claims and insurance administration."],
-    ["Nonprofit and Community", "Programme and community support."],
-    ["Transcription and Voice", "Transcription and voice recording."]
-  ];
-
-  function setMessage(message) {
-    authMessage.textContent = message;
-    authMessage.classList.toggle("hidden", !message);
-  }
-
-  function switchTab(tab) {
-    const isLogin = tab === "login";
-    loginForm.classList.toggle("hidden", !isLogin);
-    registerForm.classList.toggle("hidden", isLogin);
-    $("loginTab").classList.toggle("active", isLogin);
-    $("registerTab").classList.toggle("active", !isLogin);
-    setMessage("");
-  }
-
-  $("loginTab").addEventListener("click", () => switchTab("login"));
-  $("registerTab").addEventListener("click", () => switchTab("register"));
-
-  function openCVPage(user) {
-    authPage.classList.add("hidden");
-    memberArea.classList.remove("hidden");
-    $("welcome").textContent = "Welcome, " + user.name + "!";
-    $("cvPage").classList.remove("hidden");
-    $("jobsPage").classList.add("hidden");
-    window.scrollTo(0, 0);
-  }
-
-  function saveDemoSession(user) {
-    try {
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(user));
-      openCVPage(user);
-    } catch (error) {
-      setMessage("Your browser could not start the demo session. Please enable site storage and try again.");
-    }
-  }
-
-  // Registration is handled by the form submit event.
-  // The submit listener works whether the user taps the button or presses Enter.
-  registerForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-    setMessage("");
-
-    const name = $("fullName").value.trim();
-    const email = $("registerEmail").value.trim();
-    const password = $("registerPassword").value;
-    const confirmation = $("confirmPassword").value;
-
-    if (!name || !email || !password || !confirmation) {
-      setMessage("Please fill in every field.");
-      return;
-    }
-
-    if (!$("registerEmail").checkValidity()) {
-      setMessage("Please enter a valid email address.");
-      return;
-    }
-
-    if (password.length < 8) {
-      setMessage("Your password must contain at least 8 characters.");
-      return;
-    }
-
-    if (password !== confirmation) {
-      setMessage("Your passwords do not match.");
-      return;
-    }
-
-    // Never save the password. This is a temporary demo session only.
-    saveDemoSession({ name: name, email: email });
-  });
-
-  loginForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-    setMessage("");
-
-    const email = $("loginEmail").value.trim().toLowerCase();
-    const password = $("loginPassword").value;
-
-    if (!email || !password) {
-      setMessage("Please enter your email and password.");
-      return;
-    }
-
-    let user = null;
-    try {
-      user = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null");
-    } catch (error) {
-      user = null;
-    }
-
-    if (!user || user.email.toLowerCase() !== email) {
-      setMessage("No demo account for this email in this browser session. Choose Create account first.");
-      return;
-    }
-
-    // The password cannot be verified without a real authentication service.
-    openCVPage(user);
-  });
-
-  $("forgotLink").addEventListener("click", function (event) {
-    event.preventDefault();
-    setMessage("Password reset is not connected yet. A real authentication service is needed to send reset emails.");
-  });
-
-  $("logoutBtn").addEventListener("click", function () {
-    sessionStorage.removeItem(SESSION_KEY);
-    memberArea.classList.add("hidden");
-    authPage.classList.remove("hidden");
-    loginForm.reset();
-    registerForm.reset();
-    $("cvFile").value = "";
-    $("cvPreview").classList.add("hidden");
-    switchTab("login");
-    window.scrollTo(0, 0);
-  });
-
-  $("cvFile").addEventListener("change", function () {
-    const file = this.files && this.files[0];
-    const preview = $("cvPreview");
-
-    if (!file) {
-      preview.classList.add("hidden");
-      return;
-    }
-
-    if (!/\.(pdf|doc|docx|rtf|txt)$/i.test(file.name)) {
-      alert("Choose a PDF, DOC, DOCX, RTF or TXT file.");
-      this.value = "";
-      preview.classList.add("hidden");
-      return;
-    }
-
-    if (file.size > 10 * 1024 * 1024) {
-      alert("Please choose a CV smaller than 10 MB.");
-      this.value = "";
-      preview.classList.add("hidden");
-      return;
-    }
-
-    preview.textContent = "Selected CV: " + file.name +
-      ". This file has not been uploaded to a server.";
-    preview.classList.remove("hidden");
-  });
-
-  $("continueBtn").addEventListener("click", function () {
-    $("cvPage").classList.add("hidden");
-    $("jobsPage").classList.remove("hidden");
-    $("cvStep").classList.remove("active");
-    $("jobsStep").classList.add("active");
-    window.scrollTo(0, 0);
-  });
-
-  $("backToCV").addEventListener("click", function () {
-    $("jobsPage").classList.add("hidden");
-    $("cvPage").classList.remove("hidden");
-    $("jobsStep").classList.remove("active");
-    $("cvStep").classList.add("active");
-    window.scrollTo(0, 0);
-  });
-
-  function renderJobs() {
-    const query = $("jobSearch").value.toLowerCase().trim();
-    const category = $("jobCategory").value;
-    const results = $("jobResults");
-    results.replaceChildren();
-
-    const matches = categories.filter(function (item) {
-      return (category === "all" || item[0] === category) &&
-        (item[0] + " " + item[1]).toLowerCase().includes(query);
-    });
-
-    $("jobCount").textContent = matches.length + " categories found.";
-
-    matches.forEach(function (item) {
-      const card = document.createElement("article");
-      card.className = "job";
-
-      const title = document.createElement("h3");
-      title.textContent = item[0];
-
-      const description = document.createElement("p");
-      description.textContent = item[1];
-
-      const button = document.createElement("button");
-      button.className = "btn full";
-      button.type = "button";
-      button.textContent = "Explore this role";
-      button.addEventListener("click", function () {
-        alert(item[0] + "\n\n" + item[1] +
-          "\n\nThis is a category, not a verified job vacancy. Search official employer websites for current openings.");
-      });
-
-      card.append(title, description, button);
-      results.appendChild(card);
-    });
-
-    if (!matches.length) {
-      const empty = document.createElement("p");
-      empty.textContent = "No categories found. Try a different search.";
-      results.appendChild(empty);
-    }
-  }
-
-  categories.forEach(function (item) {
-    const option = document.createElement("option");
-    option.value = item[0];
-    option.textContent = item[0];
-    $("jobCategory").appendChild(option);
-  });
-
-  $("jobSearch").addEventListener("input", renderJobs);
-  $("jobCategory").addEventListener("change", re
+                if (result.success) {
+                    statusBox.className = "status-success";
+                    statusBox.innerText = "STK Push sent successfully! Enter your M-Pesa PIN on your phone to complete the transaction.";
+                } else {
+                    statusBox.className = "status-error";
+                    statusBox.innerText = "Failed: " + (result.error?.errorMessage || result.message || "Could not process payment.");
+                }
+            } catch (error) {
+                statusBox.className = "status-error";
+                statusBox.innerText = "Network error: Make sure your backend server is running.";
+            } finally {
+                payButton.disabled = false;
+                payButton.innerText = "Pay with M-Pesa";
+            }
+        });
+    </script>
+</body>
+</html>
