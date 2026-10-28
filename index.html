@@ -287,5 +287,82 @@
         // Initial render of all jobs on page load
         renderJobs(jobs);
     </script>
+    <!-- Floating AI Chatbot Widget HTML -->
+<div id="aiChatWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; font-family: system-ui, sans-serif;">
+    <!-- Chat Toggle Button -->
+    <button id="chatToggleBtn" onclick="toggleChat()" style="background: #2563eb; color: white; border: none; padding: 12px 18px; border-radius: 50px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        💬 Chat with AI Assistant
+    </button>
+
+    <!-- Chat Box Container (Hidden by default) -->
+    <div id="chatWindow" style="display: none; width: 320px; height: 400px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #cbd5e1;">
+        <!-- Header -->
+        <div style="background: #0f172a; color: white; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 600; font-size: 0.95rem;">Chach AI Job Finder</span>
+            <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;">&times;</button>
+        </div>
+        
+        <!-- Messages Area -->
+        <div id="chatMessages" style="flex: 1; padding: 12px; overflow-y: auto; background: #f8fafc; font-size: 0.85rem; display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: #e2e8f0; padding: 8px 12px; border-radius: 8px; align-self: flex-start; max-width: 80%;">
+                Hello! Looking for a remote job? Tell me what you're good at (e.g., Writing, AI, Virtual Assistant), and I'll find the best fit!
+            </div>
+        </div>
+        
+        <!-- Input Footer -->
+        <div style="padding: 10px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 6px;">
+            <input type="text" id="chatInput" placeholder="Type your skill or question..." style="flex: 1; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" onkeypress="handleKey(event)">
+            <button onclick="sendUserMessage()" style="background: #2563eb; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600;">Send</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleChat() {
+        const chatWindow = document.getElementById('chatWindow');
+        const toggleBtn = document.getElementById('chatToggleBtn');
+        if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+            chatWindow.style.display = 'flex';
+            toggleBtn.style.display = 'none';
+        } else {
+            chatWindow.style.display = 'none';
+            toggleBtn.style.display = 'block';
+        }
+    }
+
+    function handleKey(e) {
+        if (e.key === 'Enter') sendUserMessage();
+    }
+
+    function sendUserMessage() {
+        const input = document.getElementById('chatInput');
+        const messages = document.getElementById('chatMessages');
+        const text = input.value.trim();
+
+        if (!text) return;
+
+        // Append User Message
+        messages.innerHTML += `<div style="background: #2563eb; color: white; padding: 8px 12px; border-radius: 8px; align-self: flex-end; max-width: 80%;">${text}</div>`;
+        input.value = '';
+        messages.scrollTop = messages.scrollHeight;
+
+        // Smart Bot Logic & Matching criteria
+        setTimeout(() => {
+            let botReply = "I can help with that! Check out our search bar above to filter through our 120+ listings, or click 'Apply Now' on any role to submit your CV and pay the Ksh 100 token fee via M-Pesa.";
+            
+            const lower = text.toLowerCase();
+            if (lower.includes('writing') || lower.includes('writer')) {
+                botReply = "We have great writing roles like SEO Blog Writer and Academic Contributor! Type 'Writing' in the main search bar to see them.";
+            } else if (lower.includes('ai') || lower.includes('outlier')) {
+                botReply = "AI training is very popular right now! Look for Outlier or DataAnnotation roles in our list and click apply.";
+            } else if (lower.includes('mpesa') || lower.includes('pay')) {
+                botReply = "The application token fee is only Ksh 100 via M-Pesa STK Push. Just click 'Apply Now' on any job card to test it!";
+            }
+
+            messages.innerHTML += `<div style="background: #e2e8f0; color: #0f172a; padding: 8px 12px; border-radius: 8px; align-self: flex-start; max-width: 80%;">${botReply}</div>`;
+            messages.scrollTop = messages.scrollHeight;
+        }, 600);
+    }
+</script>
 </body>
 </html>
