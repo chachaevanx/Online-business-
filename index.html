@@ -3,17 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chach Web Solution - Remote Careers</title>
+    <title>Chach Web Solution - Remote Careers & Digital Opportunities</title>
     <style>
         :root { --primary: #0f172a; --accent: #2563eb; --mpesa: #16a34a; --bg: #f8fafc; }
         body { font-family: system-ui, -apple-system, sans-serif; margin: 0; background: var(--bg); color: #334155; }
+        
+        /* Welcome Cover Page Section */
+        #coverPage { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; text-align: center; padding: 2rem; position: fixed; inset: 0; z-index: 200; transition: opacity 0.4s ease; }
+        .cover-container { max-width: 700px; }
+        .cover-container h1 { font-size: 2.75rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.025em; }
+        .cover-container p { font-size: 1.1rem; color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; text-align: left; }
+        .feature-box { background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .feature-box h4 { margin: 0 0 0.25rem 0; color: #60a5fa; font-size: 0.95rem; }
+        .feature-box p { margin: 0; font-size: 0.8rem; color: #94a3b8; }
+        .enter-btn { background: var(--accent); color: white; border: none; padding: 0.9rem 2.5rem; font-size: 1.05rem; font-weight: 700; border-radius: 50px; cursor: pointer; transition: background 0.2s, transform 0.2s; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4); }
+        .enter-btn:hover { background: #1d4ed8; transform: translateY(-2px); }
+
+        /* Main Website Layout (Hidden initially until user enters) */
+        #mainWebsite { display: none; }
         header { background: var(--primary); color: white; padding: 2.5rem 1rem; text-align: center; }
         header h1 { margin: 0 0 0.5rem 0; font-size: 2rem; }
         header p { margin: 0; color: #94a3b8; }
+        
         .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem 4rem 1rem; }
-        .search-bar { width: 100%; padding: 0.85rem 1rem; font-size: 1rem; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 2rem; box-sizing: border-box; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .search-bar { width: 100%; padding: 0.85rem 1rem; font-size: 1rem; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 1.5rem; box-sizing: border-box; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        
+        /* Category Filter Pills */
+        .category-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .filter-pill { background: white; border: 1px solid #cbd5e1; color: #334155; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
+        .filter-pill:hover, .filter-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
+
         .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
-        .job-card { background: white; padding: 1.25rem; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #e2e8f0; }
+        
+        .job-card { background: white; padding: 1.25rem; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #e2e8f0; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .job-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); border-color: #cbd5e1; }
+        
         .job-card h3 { margin: 0 0 0.5rem 0; color: var(--primary); font-size: 1.05rem; }
         .tag { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem; text-transform: uppercase; }
         .job-meta { font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem; line-height: 1.4; }
@@ -21,7 +46,7 @@
         .apply-btn:hover { background: #1d4ed8; }
         
         /* Modal Styles */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 100; padding: 1rem; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 300; padding: 1rem; }
         .modal-content { background: white; padding: 2rem; border-radius: 12px; width: 100%; max-width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .modal-content h3 { margin-top: 0; color: var(--primary); }
         .form-group { margin-bottom: 1rem; text-align: left; }
@@ -31,47 +56,140 @@
         .pay-submit-btn:hover { background: #15803d; }
         .close-link { color: #ef4444; background: none; border: none; cursor: pointer; margin-top: 1rem; width: 100%; text-align: center; font-weight: 500; font-size: 0.9rem; }
         .status-msg { margin-top: 1rem; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; display: none; text-align: center; }
+
+        footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 3rem 1rem; margin-top: 4rem; font-size: 0.85rem; border-top: 1px solid #1e293b; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>CHACH WEB SOLUTION</h1>
-        <p>Explore 120+ verified remote work opportunities in the digital economy</p>
-    </header>
+    <!-- 1. WELCOME COVER PAGE / SPLASH SCREEN -->
+    <div id="coverPage">
+        <div class="cover-container">
+            <h1>CHACH WEB SOLUTION</h1>
+            <p>Empowering digital careers by connecting ambitious talent with verified remote work networks worldwide. Explore curated roles in AI training, digital writing, technical services, and virtual assistance.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4>120+ Verified Jobs</h4>
+                    <p>Curated remote listings across global platforms.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>Secure M-Pesa</h4>
+                    <p>Protected application processing protocols.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>AI Assistant</h4>
+                    <p>Smart guidance to help match your skills.</p>
+                </div>
+            </div>
 
-    <div class="container">
-        <input type="text" id="searchInput" class="search-bar" placeholder="Search across remote jobs by title, category, or platform (e.g., AI, Writing, Outlier)..." onkeyup="filterJobs()">
-        
-        <div id="job-list" class="job-grid">
-            <!-- Dynamically populated job cards -->
+            <button class="enter-btn" onclick="enterWebsite()">Explore Remote Careers ➔</button>
         </div>
     </div>
 
-    <!-- Application / M-Pesa Checkout Modal -->
-    <div id="appModal" class="modal">
-        <div class="modal-content">
-            <h3 id="modal-title">Apply for Role</h3>
-            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">Upload your CV and complete the KSH 100 application token fee via M-Pesa STK Push.</p>
+    <!-- 2. MAIN WEBSITE CONTENT -->
+    <div id="mainWebsite">
+        <header>
+            <h1>CHACH WEB SOLUTION</h1>
+            <p>Explore verified remote work opportunities in the digital economy</p>
+        </header>
+
+        <div class="container">
+            <!-- Search Input -->
+            <input type="text" id="searchInput" class="search-bar" placeholder="Search across remote jobs by title, category, or platform (e.g., AI, Writing, Outlier)..." onkeyup="filterJobs()">
             
-            <div class="form-group">
-                <label>UPLOAD CV (PDF / DOCX)</label>
-                <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
+            <!-- Category Filter Pills -->
+            <div class="category-filters">
+                <button class="filter-pill active" onclick="filterByCategory('All', this)">All Jobs</button>
+                <button class="filter-pill" onclick="filterByCategory('AI Training', this)">AI Training</button>
+                <button class="filter-pill" onclick="filterByCategory('Writing', this)">Writing</button>
+                <button class="filter-pill" onclick="filterByCategory('Virtual Assistant', this)">Virtual Assistant</button>
+                <button class="filter-pill" onclick="filterByCategory('Marketing', this)">Marketing</button>
+                <button class="filter-pill" onclick="filterByCategory('Technical', this)">Technical</button>
             </div>
 
-            <div class="form-group">
-                <label>M-PESA PHONE NUMBER</label>
-                <input type="text" id="mpesaPhone" placeholder="07XXXXXXXX or 2547XXXXXXXX" value="0799446312">
+            <div id="job-list" class="job-grid">
+                <!-- Dynamically populated job cards -->
             </div>
-
-            <button class="pay-submit-btn" onclick="processPaymentAndSubmit()">Pay Ksh 100 & Submit Application</button>
-            
-            <div id="statusBox" class="status-msg"></div>
-            <button class="close-link" onclick="closeModal()">Cancel & Return</button>
         </div>
+
+        <!-- Application / M-Pesa Checkout Modal -->
+        <div id="appModal" class="modal">
+            <div class="modal-content">
+                <h3 id="modal-title">Apply for Role</h3>
+                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">Upload your CV and complete the KSH 100 application token fee via M-Pesa STK Push.</p>
+                
+                <div class="form-group">
+                    <label>UPLOAD CV (PDF / DOCX)</label>
+                    <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
+                </div>
+
+                <div class="form-group">
+                    <label>M-PESA PHONE NUMBER</label>
+                    <input type="text" id="mpesaPhone" placeholder="07XXXXXXXX or 2547XXXXXXXX" value="0799446312">
+                </div>
+
+                <button class="pay-submit-btn" onclick="processPaymentAndSubmit()">Pay Ksh 100 & Submit Application</button>
+                
+                <div id="statusBox" class="status-msg"></div>
+                <button class="close-link" onclick="closeModal()">Cancel & Return</button>
+            </div>
+        </div>
+
+        <!-- Floating AI Chatbot Widget -->
+        <div id="aiChatWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; font-family: system-ui, sans-serif;">
+            <button id="chatToggleBtn" onclick="toggleChat()" style="background: #2563eb; color: white; border: none; padding: 12px 18px; border-radius: 50px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                💬 Chat with AI Assistant
+            </button>
+
+            <div id="chatWindow" style="display: none; width: 320px; height: 400px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); flex-direction: column; overflow: hidden; border: 1px solid #cbd5e1;">
+                <div style="background: #0f172a; color: white; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: 600; font-size: 0.95rem;">Chach AI Job Finder</span>
+                    <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;">&times;</button>
+                </div>
+                
+                <div id="chatMessages" style="flex: 1; padding: 12px; overflow-y: auto; background: #f8fafc; font-size: 0.85rem; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="background: #e2e8f0; padding: 8px 12px; border-radius: 8px; align-self: flex-start; max-width: 80%;">
+                        Hello! Looking for a remote job? Tell me what you're good at (e.g., Writing, AI, Virtual Assistant), and I'll find the best fit!
+                    </div>
+                </div>
+                
+                <div style="padding: 10px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 6px;">
+                    <input type="text" id="chatInput" placeholder="Type your skill or question..." style="flex: 1; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" onkeypress="handleKey(event)">
+                    <button onclick="sendUserMessage()" style="background: #2563eb; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600;">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Trust Footer -->
+        <footer>
+            <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                <p style="margin: 0; color: white; font-weight: 600; font-size: 1rem;">CHACH WEB SOLUTION</p>
+                <p style="margin: 0; line-height: 1.5;">Connecting digital talent with verified remote global networks. Protected by secure M-Pesa Express integration protocols.</p>
+                <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem; color: #cbd5e1;">
+                    <span>🔒 SSL Secure</span>
+                    <span>⚡ Instant STK Push</span>
+                    <span>✅ Verified Platforms</span>
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 0.75rem; color: #64748b;">&copy; 2026 Chach Web Solution. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
 
     <script>
+        // Transition from Cover Page to Main Site
+        function enterWebsite() {
+            const cover = document.getElementById('coverPage');
+            const main = document.getElementById('mainWebsite');
+            
+            cover.style.opacity = '0';
+            setTimeout(() => {
+                cover.style.display = 'none';
+                main.style.display = 'block';
+                renderJobs(jobs); // Load jobs once main site becomes visible
+            }, 400);
+        }
+
         // Full Master Catalog of 122+ Remote Jobs
         const jobs = [
             // AI Training & Data Annotation
@@ -195,8 +313,6 @@
             { title: "Node.js API Integration Specialist", category: "Technical", platform: "Freelance", pay: "Project-based" }
         ];
 
-        let selectedRole = "";
-
         function renderJobs(filteredList) {
             const container = document.getElementById('job-list');
             container.innerHTML = "";
@@ -233,6 +349,18 @@
             renderJobs(filtered);
         }
 
+        function filterByCategory(cat, btn) {
+            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (cat === 'All') {
+                renderJobs(jobs);
+            } else {
+                const filtered = jobs.filter(j => j.category.toLowerCase() === cat.toLowerCase());
+                renderJobs(filtered);
+            }
+        }
+
         function openModal(jobTitle) {
             selectedRole = jobTitle;
             document.getElementById('modal-title').innerText = "Apply: " + jobTitle;
@@ -267,14 +395,12 @@
                 return;
             }
 
-            // Processing state
             statusBox.className = "status-msg";
             statusBox.style.background = "#e0f2fe";
             statusBox.style.color = "#0369a1";
             statusBox.style.display = "block";
             statusBox.innerText = "Sending M-Pesa STK push for Ksh 100 to " + phone + "...";
 
-            // Simulated STK Push Success Response for GitHub Pages
             setTimeout(() => {
                 statusBox.className = "status-msg";
                 statusBox.style.background = "#dcfce7";
@@ -284,85 +410,50 @@
             }, 2000);
         }
 
-        // Initial render of all jobs on page load
-        renderJobs(jobs);
-    </script>
-    <!-- Floating AI Chatbot Widget HTML -->
-<div id="aiChatWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; font-family: system-ui, sans-serif;">
-    <!-- Chat Toggle Button -->
-    <button id="chatToggleBtn" onclick="toggleChat()" style="background: #2563eb; color: white; border: none; padding: 12px 18px; border-radius: 50px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-        💬 Chat with AI Assistant
-    </button>
-
-    <!-- Chat Box Container (Hidden by default) -->
-    <div id="chatWindow" style="display: none; width: 320px; height: 400px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #cbd5e1;">
-        <!-- Header -->
-        <div style="background: #0f172a; color: white; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-weight: 600; font-size: 0.95rem;">Chach AI Job Finder</span>
-            <button onclick="toggleChat()" style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;">&times;</button>
-        </div>
-        
-        <!-- Messages Area -->
-        <div id="chatMessages" style="flex: 1; padding: 12px; overflow-y: auto; background: #f8fafc; font-size: 0.85rem; display: flex; flex-direction: column; gap: 8px;">
-            <div style="background: #e2e8f0; padding: 8px 12px; border-radius: 8px; align-self: flex-start; max-width: 80%;">
-                Hello! Looking for a remote job? Tell me what you're good at (e.g., Writing, AI, Virtual Assistant), and I'll find the best fit!
-            </div>
-        </div>
-        
-        <!-- Input Footer -->
-        <div style="padding: 10px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 6px;">
-            <input type="text" id="chatInput" placeholder="Type your skill or question..." style="flex: 1; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" onkeypress="handleKey(event)">
-            <button onclick="sendUserMessage()" style="background: #2563eb; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600;">Send</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    function toggleChat() {
-        const chatWindow = document.getElementById('chatWindow');
-        const toggleBtn = document.getElementById('chatToggleBtn');
-        if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
-            chatWindow.style.display = 'flex';
-            toggleBtn.style.display = 'none';
-        } else {
-            chatWindow.style.display = 'none';
-            toggleBtn.style.display = 'block';
-        }
-    }
-
-    function handleKey(e) {
-        if (e.key === 'Enter') sendUserMessage();
-    }
-
-    function sendUserMessage() {
-        const input = document.getElementById('chatInput');
-        const messages = document.getElementById('chatMessages');
-        const text = input.value.trim();
-
-        if (!text) return;
-
-        // Append User Message
-        messages.innerHTML += `<div style="background: #2563eb; color: white; padding: 8px 12px; border-radius: 8px; align-self: flex-end; max-width: 80%;">${text}</div>`;
-        input.value = '';
-        messages.scrollTop = messages.scrollHeight;
-
-        // Smart Bot Logic & Matching criteria
-        setTimeout(() => {
-            let botReply = "I can help with that! Check out our search bar above to filter through our 120+ listings, or click 'Apply Now' on any role to submit your CV and pay the Ksh 100 token fee via M-Pesa.";
-            
-            const lower = text.toLowerCase();
-            if (lower.includes('writing') || lower.includes('writer')) {
-                botReply = "We have great writing roles like SEO Blog Writer and Academic Contributor! Type 'Writing' in the main search bar to see them.";
-            } else if (lower.includes('ai') || lower.includes('outlier')) {
-                botReply = "AI training is very popular right now! Look for Outlier or DataAnnotation roles in our list and click apply.";
-            } else if (lower.includes('mpesa') || lower.includes('pay')) {
-                botReply = "The application token fee is only Ksh 100 via M-Pesa STK Push. Just click 'Apply Now' on any job card to test it!";
+        // Chatbot Widget Logic
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            const toggleBtn = document.getElementById('chatToggleBtn');
+            if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+                chatWindow.style.display = 'flex';
+                toggleBtn.style.display = 'none';
+            } else {
+                chatWindow.style.display = 'none';
+                toggleBtn.style.display = 'block';
             }
+        }
 
-            messages.innerHTML += `<div style="background: #e2e8f0; color: #0f172a; padding: 8px 12px; border-radius: 8px; align-self: flex-start; max-width: 80%;">${botReply}</div>`;
+        function handleKey(e) {
+            if (e.key === 'Enter') sendUserMessage();
+        }
+
+        function sendUserMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            messages.innerHTML += `<div style="background: #2563eb; color: white; padding: 8px 12px; border-radius: 8px; align-self: flex-end; max-width: 80%;">${text}</div>`;
+            input.value = '';
             messages.scrollTop = messages.scrollHeight;
-        }, 600);
-    }
-</script>
+
+            setTimeout(() => {
+                let botReply = "I can help with that! Check out our search bar above to filter through our 120+ listings, or click 'Apply Now' on any role to submit your CV and pay the Ksh 100 token fee via M-Pesa.";
+                
+                const lower = text.toLowerCase();
+                if (lower.includes('writing') || lower.includes('writer')) {
+                    botReply = "We have great writing roles like SEO Blog Writer and Academic Contributor! Click the 'Writing' filter pill above to see them.";
+                } else if (lower.includes('ai') || lower.includes('outlier')) {
+                    botReply = "AI training is very popular right now! Click the 'AI Training' filter pill above to view available roles.";
+                } else if (lower.includes('mpesa') || lower.includes('pay')) {
+                    botReply = "The application token fee is only Ksh 100 via M-Pesa STK Push. Just click 'Apply Now' on any job card to test it!";
+                }
+
+                messages.innerHTML += `<div style="background: #e2e8f0; color: #0f172a; padding: 8px 12px; border-radius: 8px; align-self: flex-start; max-width: 80%;">${botReply}</div>`;
+                messages.scrollTop = messages.scrollHeight;
+            }, 600);
+        }
+    </script>
 </body>
 </html>
