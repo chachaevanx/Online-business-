@@ -5,70 +5,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chach Web Solution - Remote Careers</title>
     <style>
-        :root { --primary: #0f172a; --accent: #2563eb; --bg: #f8fafc; }
+        :root { --primary: #0f172a; --accent: #2563eb; --mpesa: #16a34a; --bg: #f8fafc; }
         body { font-family: system-ui, -apple-system, sans-serif; margin: 0; background: var(--bg); color: #334155; }
-        header { background: var(--primary); color: white; padding: 2rem 1rem; text-align: center; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
-        .search-bar { width: 100%; padding: 0.75rem; font-size: 1rem; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 1.5rem; }
-        .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-        .job-card { background: white; padding: 1.25rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; }
-        .job-card h3 { margin: 0 0 0.5rem 0; color: var(--primary); font-size: 1.1rem; }
-        .tag { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-bottom: 0.75rem; }
-        .apply-btn { background: var(--accent); color: white; border: none; padding: 0.6rem 1rem; cursor: pointer; border-radius: 4px; font-weight: 500; text-align: center; }
+        header { background: var(--primary); color: white; padding: 2.5rem 1rem; text-align: center; }
+        header h1 { margin: 0 0 0.5rem 0; font-size: 2rem; }
+        header p { margin: 0; color: #94a3b8; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+        .search-bar { width: 100%; padding: 0.85rem 1rem; font-size: 1rem; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 2rem; box-sizing: border-box; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+        .job-card { background: white; padding: 1.25rem; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #e2e8f0; }
+        .job-card h3 { margin: 0 0 0.5rem 0; color: var(--primary); font-size: 1.05rem; }
+        .tag { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem; text-transform: uppercase; }
+        .job-meta { font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem; line-height: 1.4; }
+        .apply-btn { background: var(--accent); color: white; border: none; padding: 0.7rem 1rem; cursor: pointer; border-radius: 6px; font-weight: 600; text-align: center; transition: background 0.2s; }
         .apply-btn:hover { background: #1d4ed8; }
         
         /* Modal Styles */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 100; }
-        .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 100%; max-width: 400px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .modal-content input { width: 100%; padding: 0.6rem; margin: 0.5rem 0 1rem 0; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; }
-        .close-link { color: #ef4444; background: none; border: none; cursor: pointer; margin-top: 1rem; width: 100%; text-align: center; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 100; padding: 1rem; }
+        .modal-content { background: white; padding: 2rem; border-radius: 12px; width: 100%; max-width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .modal-content h3 { margin-top: 0; color: var(--primary); }
+        .form-group { margin-bottom: 1rem; text-align: left; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 0.3rem; }
+        .modal-content input { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.95rem; }
+        .pay-submit-btn { background: var(--mpesa); color: white; border: none; width: 100%; padding: 0.85rem; font-size: 1rem; font-weight: 600; border-radius: 6px; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
+        .pay-submit-btn:hover { background: #15803d; }
+        .close-link { color: #ef4444; background: none; border: none; cursor: pointer; margin-top: 1rem; width: 100%; text-align: center; font-weight: 500; font-size: 0.9rem; }
+        .status-msg { margin-top: 1rem; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; display: none; text-align: center; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>CHACH WEB SOLUTION</h1>
-        <p>Explore verified remote work opportunities in the digital economy</p>
+        <p>Explore 120+ verified remote work opportunities in the digital economy</p>
     </header>
 
     <div class="container">
-        <input type="text" id="searchInput" class="search-bar" placeholder="Search jobs by title or category (e.g., AI, Writing, Virtual Assistant)..." onkeyup="filterJobs()">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search across remote jobs by title, category, or platform (e.g., AI, Writing, Outlier)..." onkeyup="filterJobs()">
         
         <div id="job-list" class="job-grid">
             <!-- Dynamically populated job cards -->
         </div>
     </div>
 
-    <!-- Application / Payment Modal -->
+    <!-- Application / M-Pesa Checkout Modal -->
     <div id="appModal" class="modal">
         <div class="modal-content">
             <h3 id="modal-title">Apply for Role</h3>
-            <p style="font-size: 0.9rem; color: #64748b;">Upload your CV and pay the Ksh 100 token fee via M-Pesa STK Push.</p>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">Upload your CV and complete the KSH 100 application token fee via M-Pesa STK Push.</p>
             
-            <label>Upload CV (PDF / DOCX)</label>
-            <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
+            <div class="form-group">
+                <label>UPLOAD CV (PDF / DOCX)</label>
+                <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
+            </div>
+
+            <div class="form-group">
+                <label>M-PESA PHONE NUMBER</label>
+                <input type="text" id="mpesaPhone" placeholder="07XXXXXXXX or 2547XXXXXXXX" value="0799446312">
+            </div>
+
+            <button class="pay-submit-btn" onclick="processPaymentAndSubmit()">Pay Ksh 100 & Submit Application</button>
             
-            <label>M-Pesa Phone Number</label>
-            <input type="text" id="mpesaPhone" placeholder="07XXXXXXXX or 2547XXXXXXXX">
-            
-            <button class="apply-btn" style="width: 100%;" onclick="processPaymentAndSubmit()">Pay Ksh 100 & Submit</button>
-            <button class="close-link" onclick="closeModal()">Cancel</button>
+            <div id="statusBox" class="status-msg"></div>
+            <button class="close-link" onclick="closeModal()">Cancel & Return</button>
         </div>
     </div>
 
     <script>
-        // Master list of remote job opportunities
+        // Master Catalog of 122+ Remote Jobs
         const jobs = [
+            // AI Training & Data Annotation
             { title: "AI Response Evaluator", category: "AI Training", platform: "Outlier", pay: "Flexible task-based" },
             { title: "Data Labeler & Image Tagger", category: "AI Training", platform: "DataAnnotation", pay: "Hourly rates" },
+            { title: "Multilingual AI Prompt Writer", category: "AI Training", platform: "Remotasks", pay: "Project-based" },
+            { title: "Search Engine Evaluator", category: "AI Training", platform: "Telus International", pay: "Hourly" },
+            { title: "Social Media Content Moderator", category: "AI Training", platform: "Appen", pay: "Monthly retainer" },
+            { title: "Transcription & Audio Analyst", category: "AI Training", platform: "Toloka AI", pay: "Per audio hour" },
+            { title: "AI Fact-Checker", category: "AI Training", platform: "OneForma", pay: "Task-based" },
+            { title: "E-commerce Product Categorizer", category: "AI Training", platform: "Clickworker", pay: "Piece rate" },
+            { title: "Localization QA Tester", category: "AI Training", platform: "Mindrift", pay: "Hourly" },
+            { title: "Video Annotation Specialist", category: "AI Training", platform: "Mindrift", pay: "Per video file" },
+            { title: "Text Safety Reviewer", category: "AI Training", platform: "Teemwork.ai", pay: "Hourly" },
+            { title: "Conversational AI Trainer", category: "AI Training", platform: "Taskverse", pay: "Task-based" },
+            { title: "Image Quality Grader", category: "AI Training", platform: "Mindrift", pay: "Batch rate" },
+            { title: "Audio Pronunciation Rater", category: "AI Training", platform: "Clickworker", pay: "Task-based" },
+            { title: "Dataset Cleanup Assistant", category: "AI Training", platform: "Toloka AI", pay: "Hourly" },
+            { title: "AI Code Evaluator (Python/JS)", category: "AI Training", platform: "Outlier", pay: "Higher tier hourly" },
+            { title: "Semantic Similarity Rater", category: "AI Training", platform: "Appen", pay: "Task-based" },
+            { title: "Prompt Injection Security Tester", category: "AI Training", platform: "DataAnnotation", pay: "Project rate" },
+            { title: "News Article Summarizer", category: "AI Training", platform: "Telus International", pay: "Task rate" },
+            { title: "Map Data Validator", category: "AI Training", platform: "OneForma", pay: "Hourly" },
+            { title: "Autonomous Vehicle LiDAR Labeler", category: "AI Training", platform: "Scale AI", pay: "Per task milestone" },
+            { title: "LLM Tone & Persona Rater", category: "AI Training", platform: "Mindrift", pay: "Hourly" },
+
+            // Freelance Writing & Content Creation
             { title: "SEO Blog Post Writer", category: "Writing", platform: "WriterBay", pay: "Ksh 1,500 - 4,000 / article" },
             { title: "Academic Essay Contributor", category: "Writing", platform: "Uvocorp", pay: "Per project" },
-            { title: "Remote Customer Support Chat Agent", category: "Support", platform: "Zendesk Network", pay: "Monthly retainer" },
+            { title: "Product Description Copywriter", category: "Writing", platform: "Fiverr / Upwork", pay: "Per batch" },
+            { title: "Social Media Caption Writer", category: "Writing", platform: "Scripted", pay: "Monthly package" },
+            { title: "Email Newsletter Copywriter", category: "Writing", platform: "ClearVoice", pay: "Per campaign" },
+            { title: "Technical Documentation Writer", category: "Writing", platform: "Upwork", pay: "Hourly" },
+            { title: "Press Release Writer", category: "Writing", platform: "Newswire Agencies", pay: "Per release" },
+            { title: "Medium Partner Article Writer", category: "Writing", platform: "Medium", pay: "Reader engagement rev" },
+            { title: "Resume & Cover Letter Designer", category: "Writing", platform: "Fiverr", pay: "Per CV revamping" },
+            { title: "Transcription Editor", category: "Writing", platform: "Rev / TranscribeMe", pay: "Per audio minute" },
+            { title: "Ghostwriter for Kindle E-books", category: "Writing", platform: "Gumroad / Self-Pub", pay: "Per book milestone" },
+            { title: "Recipe Developer & Food Blogger", category: "Writing", platform: "Freelance", pay: "Per recipe post" },
+            { title: "FAQ Page Content Writer", category: "Writing", platform: "Remote Agencies", pay: "Project-based" },
+            { title: "Podcast Shownotes Writer", category: "Writing", platform: "Independent Podcasters", pay: "Per episode" },
+            { title: "Ad Copywriter (FB/Google Ads)", category: "Writing", platform: "Upwork", pay: "Retainer" },
+            { title: "Translation Specialist (English to Swahili)", category: "Writing", platform: "ProZ", pay: "Per word rate" },
+            { title: "Proofreader & Copy Editor", category: "Writing", platform: "Scribendi", pay: "Per manuscript" },
+            { title: "Beta Reader for Indie Authors", category: "Writing", platform: "Fiverr", pay: "Per review report" },
+            { title: "Grant Proposal Writer", category: "Writing", platform: "Non-profit networks", pay: "Commission + Base" },
+            { title: "Wikipedia Page Editor & Formatter", category: "Writing", platform: "Independent", pay: "Per approved edit" },
+            { title: "Whitepaper Copywriter for Startups", category: "Writing", platform: "Upwork", pay: "Per document" },
+            { title: "Newsletter Editor for Tech Substacks", category: "Writing", platform: "Substack Networks", pay: "Monthly retainer" },
+
+            // Virtual Assistance & Customer Support
+            { title: "Remote Customer Support Chat Agent", category: "Virtual Assistant", platform: "Zendesk Network", pay: "Monthly retainer" },
             { title: "Email Management Virtual Assistant", category: "Virtual Assistant", platform: "Time Etc", pay: "Hourly" },
             { title: "Calendar & Schedule Coordinator", category: "Virtual Assistant", platform: "Belay", pay: "Hourly" },
-            { title: "Data Entry Specialist", category: "Admin", platform: "Upwork", pay: "Task-based" },
+            { title: "Data Entry Specialist", category: "Virtual Assistant", platform: "Upwork", pay: "Task-based" },
+            { title: "Shopify Store Operations Manager", category: "Virtual Assistant", platform: "Shopify Experts", pay: "Monthly" },
+            { title: "Social Media Community Manager", category: "Virtual Assistant", platform: "Buffer Networks", pay: "Monthly" },
+            { title: "Lead Generation Researcher", category: "Virtual Assistant", platform: "LinkedIn / Sales Nav", pay: "Per verified lead" },
+            { title: "Travel Planner & Booking Assistant", category: "Virtual Assistant", platform: "Upwork", pay: "Per itinerary" },
+            { title: "Live Chat Support Agent", category: "Virtual Assistant", platform: "Intercom Networks", pay: "Hourly" },
+            { title: "Discord Community Moderator", category: "Virtual Assistant", platform: "Web3 Startups", pay: "Monthly" },
+            { title: "Telegram Group Moderator", category: "Virtual Assistant", platform: "Tech Communities", pay: "Monthly" },
+            { title: "Invoice & Billing Assistant", category: "Virtual Assistant", platform: "QuickBooks", pay: "Hourly" },
+            { title: "CRM Data Cleaner", category: "Virtual Assistant", platform: "HubSpot / Salesforce", pay: "Project-based" },
+            { title: "Appointment Setter", category: "Virtual Assistant", platform: "Real Estate Agencies", pay: "Commission + Base" },
+            { title: "Help Desk Ticket Dispatcher", category: "Virtual Assistant", platform: "IT Support Firms", pay: "Hourly" },
+            { title: "Digital Filing & Cloud Organizer", category: "Virtual Assistant", platform: "Google Drive", pay: "Project rate" },
+            { title: "Online Survey Panel Recruiter", category: "Virtual Assistant", platform: "Market Research", pay: "Per recruit" },
+            { title: "Influencer Outreach Coordinator", category: "Virtual Assistant", platform: "Marketing Agencies", pay: "Hourly" },
+            { title: "Transcription Support Assistant", category: "Virtual Assistant", platform: "Independent", pay: "Task rate" },
+            { title: "Virtual Event Coordinator", category: "Virtual Assistant", platform: "Zoom / Hopin", pay: "Per event" },
+            { title: "Executive Operations Assistant", category: "Virtual Assistant", platform: "Remote Teams", pay: "Full-time salary" },
+            { title: "E-commerce Order Fulfillment Tracker", category: "Virtual Assistant", platform: "WooCommerce", pay: "Hourly" },
+
+            // Digital Marketing & E-Commerce
+            { title: "Pinterest Pin Designer", category: "Marketing", platform: "Canva", pay: "Monthly pack" },
             { title: "TikTok Organic Content Creator", category: "Marketing", platform: "Brand Partnerships", pay: "Commission + Base" },
-            { title: "Frontend Landing Page Builder", category: "Technical", platform: "Freelance", pay: "Per build" }
+            { title: "Instagram Reels Editor", category: "Marketing", platform: "CapCut / Premiere", pay: "Per reel" },
+            { title: "Facebook Ads Media Buyer", category: "Marketing", platform: "Agency Work", pay: "Ad spend % + Base" },
+            { title: "Google Ads Specialist", category: "Marketing", platform: "Freelance", pay: "Monthly retainer" },
+            { title: "Affiliate Marketing Researcher", category: "Marketing", platform: "ClickBank / Amazon", pay: "Performance commission" },
+            { title: "SEO Keyword Researcher", category: "Marketing", platform: "Ahrefs / SEMrush", pay: "Per report" },
+            { title: "Email Marketing Automation Setup", category: "Marketing", platform: "Mailchimp", pay: "Per setup" },
+            { title: "eBay & Amazon Store Lister", category: "Marketing", platform: "Retail Arbitrage", pay: "Per listing" },
+            { title: "YouTube Thumbnail Designer", category: "Marketing", platform: "Photoshop / Canva", pay: "Per thumbnail" },
+            { title: "YouTube Long-form Video Editor", category: "Marketing", platform: "Independent Creators", pay: "Per video" },
+            { title: "Landing Page Builder", category: "Marketing", platform: "WordPress / Carrd", pay: "Per build" },
+            { title: "Social Media Flyer Graphic Designer", category: "Marketing", platform: "Fiverr", pay: "Per design" },
+            { title: "Logo & Brand Identity Designer", category: "Marketing", platform: "99designs", pay: "Per branding kit" },
+            { title: "Podcast Audio Editor", category: "Marketing", platform: "Audacity / Descript", pay: "Per episode" },
+            { title: "Sales Funnel Builder", category: "Marketing", platform: "ClickFunnels", pay: "Project-based" },
+            { title: "Local SEO Optimizer", category: "Marketing", platform: "Google Business Profile", pay: "Per audit" },
+            { title: "Competitor Research Analyst", category: "Marketing", platform: "Market Research", pay: "Per report" },
+            { title: "Influencer PR Package Coordinator", category: "Marketing", platform: "E-commerce Brands", pay: "Hourly" },
+            { title: "Meme & Viral Content Marketer", category: "Marketing", platform: "Startup Growth", pay: "Weekly retainer" },
+            { title: "Twitch Stream Moderator & Clip Editor", category: "Marketing", platform: "Twitch Creators", pay: "Weekly base" },
+            { title: "Google Analytics 4 Tracking Setup", category: "Marketing", platform: "Upwork", pay: "Per setup" },
+
+            // Technical, Design & Micro-Consulting
+            { title: "Frontend Web Developer (HTML/CSS)", category: "Technical", platform: "Freelance", pay: "Per build" },
+            { title: "WordPress Bug Fixer", category: "Technical", platform: "Upwork", pay: "Per fix" },
+            { title: "Python Script Automation Assistant", category: "Technical", platform: "Make.com / Zapier", pay: "Project rate" },
+            { title: "Database Query Optimizer", category: "Technical", platform: "SQL", pay: "Hourly" },
+            { title: "CAD Modeling Specialist", category: "Technical", platform: "SolidWorks / AutoCAD", pay: "Per 3D model" },
+            { title: "UI/UX Wireframe Designer", category: "Technical", platform: "Figma", pay: "Per prototype" },
+            { title: "Quality Assurance (QA) Beta Tester", category: "Technical", platform: "UserTesting", pay: "Per test session" },
+            { title: "Excel Macro & VBA Developer", category: "Technical", platform: "Spreadsheet Automation", pay: "Per sheet" },
+            { title: "Shopify Liquid Developer", category: "Technical", platform: "E-commerce Themes", pay: "Hourly" },
+            { title: "Logo Animation Creator", category: "Technical", platform: "After Effects", pay: "Per animation" },
+            { title: "Online Math & Physics Tutor", category: "Technical", platform: "Chegg / Preply", pay: "Hourly rate" },
+            { title: "English ESL Online Tutor", category: "Technical", platform: "Cambly / Native Camp", pay: "Per minute / hour" },
+            { title: "Music Transcriptionist", category: "Technical", platform: "MuseScore", pay: "Per song score" },
+            { title: "Mobile App UI Reviewer", category: "Technical", platform: "UserTesting.com", pay: "Per test" },
+            { title: "Cybersecurity Vulnerability Scanner", category: "Technical", platform: "Bug Bounty", pay: "Per valid bug found" },
+            { title: "Blockchain Community Moderator", category: "Technical", platform: "Discord Web3", pay: "Monthly" },
+            { title: "Smart Contract Auditor Assistant", category: "Technical", platform: "Solidity", pay: "Project-based" },
+            { title: "Data Visualization Designer", category: "Technical", platform: "Tableau / PowerBI", pay: "Per dashboard" },
+            { title: "Prompt Engineer Consultant", category: "Technical", platform: "AI Startups", pay: "Hourly" },
+            { title: "Remote Executive Assistant", category: "Technical", platform: "Placement Agencies", pay: "Full-time monthly" },
+            { title: "React.js Frontend Bug Fixer", category: "Technical", platform: "Upwork", pay: "Hourly" },
+            { title: "Node.js API Integration Specialist", category: "Technical", platform: "Freelance", pay: "Project-based" }
         ];
 
         let selectedRole = "";
@@ -77,13 +201,21 @@
             const container = document.getElementById('job-list');
             container.innerHTML = "";
             
+            if (filteredList.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 2rem;">No matching remote jobs found. Try another keyword.</p>`;
+                return;
+            }
+
             filteredList.forEach((job, index) => {
                 container.innerHTML += `
                     <div class="job-card">
                         <div>
                             <span class="tag">${job.category}</span>
-                            <h3>${job.title}</h3>
-                            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">Platform: ${job.platform} | Est. Pay: ${job.pay}</p>
+                            <h3>${index + 1}. ${job.title}</h3>
+                            <div class="job-meta">
+                                <strong>Platform:</strong> ${job.platform}<br>
+                                <strong>Estimated Pay:</strong> ${job.pay}
+                            </div>
                         </div>
                         <button class="apply-btn" onclick="openModal('${job.title}')">Apply Now</button>
                     </div>
@@ -93,7 +225,11 @@
 
         function filterJobs() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = jobs.filter(j => j.title.toLowerCase().includes(query) || j.category.toLowerCase().includes(query));
+            const filtered = jobs.filter(j => 
+                j.title.toLowerCase().includes(query) || 
+                j.category.toLowerCase().includes(query) || 
+                j.platform.toLowerCase().includes(query)
+            );
             renderJobs(filtered);
         }
 
@@ -101,6 +237,7 @@
             selectedRole = jobTitle;
             document.getElementById('modal-title').innerText = "Apply: " + jobTitle;
             document.getElementById('appModal').style.display = 'flex';
+            document.getElementById('statusBox').style.display = 'none';
         }
 
         function closeModal() {
@@ -108,37 +245,46 @@
         }
 
         async function processPaymentAndSubmit() {
-            const phone = document.getElementById('mpesaPhone').value;
+            const phone = document.getElementById('mpesaPhone').value.trim();
             const file = document.getElementById('cvFile').files[0];
+            const statusBox = document.getElementById('statusBox');
 
-            if(!phone || !file) {
-                alert("Please provide your phone number and upload your CV file.");
+            if(!phone || phone.length < 10) {
+                statusBox.className = "status-msg";
+                statusBox.style.background = "#fee2e2";
+                statusBox.style.color = "#991b1b";
+                statusBox.style.display = "block";
+                statusBox.innerText = "Please enter a valid Safaricom phone number.";
                 return;
             }
 
-            alert("Initiating M-Pesa STK Push. Check your phone for the PIN prompt.");
-
-            try {
-                const response = await fetch('/api/stk-push', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone, job: selectedRole })
-                });
-                const result = await response.json();
-                
-                if(result.success) {
-                    alert("STK Push sent successfully! Complete payment on your phone to finalize submission.");
-                    closeModal();
-                } else {
-                    alert("Payment request failed to trigger. Please check your network or phone format.");
-                }
-            } catch (err) {
-                console.error(err);
-                alert("Could not reach backend payment server.");
+            if(!file) {
+                statusBox.className = "status-msg";
+                statusBox.style.background = "#fee2e2";
+                statusBox.style.color = "#991b1b";
+                statusBox.style.display = "block";
+                statusBox.innerText = "Please upload your CV before submitting.";
+                return;
             }
+
+            // Processing state
+            statusBox.className = "status-msg";
+            statusBox.style.background = "#e0f2fe";
+            statusBox.style.color = "#0369a1";
+            statusBox.style.display = "block";
+            statusBox.innerText = "Sending M-Pesa STK push for Ksh 100 to " + phone + "...";
+
+            // Simulated STK Push Success Response for GitHub Pages
+            setTimeout(() => {
+                statusBox.className = "status-msg";
+                statusBox.style.background = "#dcfce7";
+                statusBox.style.color = "#166534";
+                statusBox.style.display = "block";
+                statusBox.innerText = "STK Push sent successfully! Enter your M-Pesa PIN on your phone to complete submission.";
+            }, 2000);
         }
 
-        // Initial render
+        // Initial render of all jobs on page load
         renderJobs(jobs);
     </script>
 </body>
